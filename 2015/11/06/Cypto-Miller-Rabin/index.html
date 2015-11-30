@@ -8,7 +8,7 @@
   <meta name="description" content="最近看数论的时候看到，想起之前做题都是用kuangbin的模板，也想自己实现一下，然而理解还是很粗浅，只能怪自己数学太渣。
 关于素数测试    非对称加密的大部分大部分基于大整数分解和一些关于离散对数问题，这都需要生成一种极大的素数。对于大素数的判定，
 Miller-Rabin算法比较流行。
-基于概率的素数测试    速度快（Miller-Rabin的效率应该是O(N^(1/4))），原理简单，易">
+基于概率的素数测试    速度快（Miller-Rabin的效率应该是O(||N||），原理简单，易于编程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cypto————Miller-Rabin的学习笔记与代码实现">
 <meta property="og:url" content="http://zjwzcn7.github.io/2015/11/06/Cypto-Miller-Rabin/index.html">
@@ -16,14 +16,14 @@ Miller-Rabin算法比较流行。
 <meta property="og:description" content="最近看数论的时候看到，想起之前做题都是用kuangbin的模板，也想自己实现一下，然而理解还是很粗浅，只能怪自己数学太渣。
 关于素数测试    非对称加密的大部分大部分基于大整数分解和一些关于离散对数问题，这都需要生成一种极大的素数。对于大素数的判定，
 Miller-Rabin算法比较流行。
-基于概率的素数测试    速度快（Miller-Rabin的效率应该是O(N^(1/4))），原理简单，易">
-<meta property="og:updated_time" content="2015-11-07T13:54:30.259Z">
+基于概率的素数测试    速度快（Miller-Rabin的效率应该是O(||N||），原理简单，易于编程">
+<meta property="og:updated_time" content="2015-11-30T16:01:48.038Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cypto————Miller-Rabin的学习笔记与代码实现">
 <meta name="twitter:description" content="最近看数论的时候看到，想起之前做题都是用kuangbin的模板，也想自己实现一下，然而理解还是很粗浅，只能怪自己数学太渣。
 关于素数测试    非对称加密的大部分大部分基于大整数分解和一些关于离散对数问题，这都需要生成一种极大的素数。对于大素数的判定，
 Miller-Rabin算法比较流行。
-基于概率的素数测试    速度快（Miller-Rabin的效率应该是O(N^(1/4))），原理简单，易">
+基于概率的素数测试    速度快（Miller-Rabin的效率应该是O(||N||），原理简单，易于编程">
 <meta name="twitter:creator" content="@coolwuxing">
   
     <link rel="alternative" href="/atom.xml" title="zjwzcn07" type="application/atom+xml">
@@ -117,8 +117,8 @@ ga('send', 'pageview');
         <p>最近看数论的时候看到，想起之前做题都是用kuangbin的模板，也想自己实现一下，然而理解还是很粗浅，只能怪自己数学太渣。</p>
 <h2 id="关于素数测试">关于素数测试</h2><pre><code>    非对称加密的大部分大部分基于大整数分解和一些关于离散对数问题，这都需要生成一种极大的素数。对于大素数的判定，
 Miller-Rabin算法比较流行。
-</code></pre><h3 id="基于概率的素数测试">基于概率的素数测试</h3><pre><code>    速度快（Miller-Rabin的效率应该是<span class="function"><span class="title">O</span><span class="params">(N^(<span class="number">1</span>/<span class="number">4</span>)</span></span>)），原理简单，易于编程实现，有一定误判概率（其实也很小了，
-可以预处理掉一些伪素数即可，相对于软硬件上的不安全因素，这个误判概率也算很小的了）。
+</code></pre><h3 id="基于概率的素数测试">基于概率的素数测试</h3><pre><code>    速度快（Miller-Rabin的效率应该是O(||<span class="string">N</span>||<span class="string">），原理简单，易于编程实现，有一定误判概率（其实也很小了，
+可以预处理掉一些伪素数即可，相对于软硬件上的不安全因素，这个误判概率也算很小的了）。</span>
 </code></pre><h3 id="基本框架">基本框架</h3><pre><code>    给定一个正奇数<span class="keyword">n</span>，定义一个集合<span class="literal">W</span>(<span class="keyword">n</span>)属于Z(<span class="keyword">n</span>)(Z(<span class="keyword">n</span>)是模<span class="keyword">n</span>的非负整数集合）并且满足以下条件
     (1) 给定属于Z(<span class="keyword">n</span>)的非负整数a，可以多项式时间内判断a是否属于<span class="literal">W</span>(<span class="keyword">n</span>)；
     (2) 如果<span class="keyword">n</span>是一个素数，那么Z(<span class="keyword">n</span>)中属于<span class="literal">W</span>(<span class="keyword">n</span>)的个数为0；
@@ -171,7 +171,7 @@ a属于Zn*是“N为合数的强证据”，如果不是强证据，则a^((<span
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/11/06/Cypto-Miller-Rabin/" data-id="cigp50kfl00040wdgtwb5mbbm" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2015/11/06/Cypto-Miller-Rabin/" data-id="cihm6l8z90009mcdgzesu2tpk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cypto/">Cypto</a></li></ul>
@@ -181,6 +181,15 @@ a属于Zn*是“N为合数的强证据”，如果不是强证据，则a^((<span
   
     
 <nav id="article-nav">
+  
+    <a href="/2015/12/01/POJ-3246-Game/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          POJ_3246_Game
+        
+      </div>
+    </a>
   
   
     <a href="/2015/11/04/Social-Engineering_MobilePhone/" id="article-nav-older" class="article-nav-link-wrap">
@@ -220,7 +229,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cypto/">Cypto</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Social-Engineering/">Social Engineering</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACM——计算几何/">ACM——计算几何</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cypto/">Cypto</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Social-Engineering/">Social Engineering</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -229,7 +238,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Cypto/" style="font-size: 10px;">Cypto</a> <a href="/tags/Social-Engineering/" style="font-size: 10px;">Social Engineering</a>
+      <a href="/tags/ACM——计算几何/" style="font-size: 20px;">ACM——计算几何</a> <a href="/tags/Cypto/" style="font-size: 10px;">Cypto</a> <a href="/tags/Social-Engineering/" style="font-size: 10px;">Social Engineering</a>
     </div>
   </div>
 
@@ -238,7 +247,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -248,6 +257,14 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/12/01/POJ-2079-Triangle/">POJ_2079_Triangle</a>
+          </li>
+        
+          <li>
+            <a href="/2015/12/01/POJ-3246-Game/">POJ_3246_Game</a>
+          </li>
         
           <li>
             <a href="/2015/11/06/Cypto-Miller-Rabin/">Cypto————Miller-Rabin的学习笔记与代码实现</a>

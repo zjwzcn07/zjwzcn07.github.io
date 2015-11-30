@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>POJ_3246_Game | zjwzcn07</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="题意是给你一堆点，让你删除一个点之后求剩下点所能构成的最大凸包
+想法先构造凸包后，从凸包上遍历删点，重建凸包，O（N*Nlogn）。注意删点时的标记。
+另外发现int和double的计算时间差异略大。
+114957957&amp;#9;zjwzcn07&amp;#9;3246&amp;#9;Accepted&amp;#9;19516K&amp;#9;3313MS&amp;#9;G++&amp;#9;2768B&amp;#9;2015-11-30 16:00:4">
+<meta property="og:type" content="article">
+<meta property="og:title" content="POJ_3246_Game">
+<meta property="og:url" content="http://zjwzcn7.github.io/2015/12/01/POJ-3246-Game/index.html">
+<meta property="og:site_name" content="zjwzcn07">
+<meta property="og:description" content="题意是给你一堆点，让你删除一个点之后求剩下点所能构成的最大凸包
+想法先构造凸包后，从凸包上遍历删点，重建凸包，O（N*Nlogn）。注意删点时的标记。
+另外发现int和double的计算时间差异略大。
+114957957&amp;#9;zjwzcn07&amp;#9;3246&amp;#9;Accepted&amp;#9;19516K&amp;#9;3313MS&amp;#9;G++&amp;#9;2768B&amp;#9;2015-11-30 16:00:4">
+<meta property="og:updated_time" content="2015-11-30T16:37:21.926Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="POJ_3246_Game">
+<meta name="twitter:description" content="题意是给你一堆点，让你删除一个点之后求剩下点所能构成的最大凸包
+想法先构造凸包后，从凸包上遍历删点，重建凸包，O（N*Nlogn）。注意删点时的标记。
+另外发现int和double的计算时间差异略大。
+114957957&amp;#9;zjwzcn07&amp;#9;3246&amp;#9;Accepted&amp;#9;19516K&amp;#9;3313MS&amp;#9;G++&amp;#9;2768B&amp;#9;2015-11-30 16:00:4">
+<meta name="twitter:creator" content="@coolwuxing">
+  
+    <link rel="alternative" href="/atom.xml" title="zjwzcn07" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-43935113-3', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="header">
+  <div id="banner">
+    <div id="cover"></div>
+    <div id="stars"></div>
+  </div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">zjwzcn07</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">丈夫立世，独对八荒</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://zjwzcn7.github.io"></form>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="outer">
+        <section id="main"><article id="[layout]-POJ-3246-Game" class="article article-type-[layout]" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/12/01/POJ-3246-Game/" class="article-date">
+  <time datetime="2015-11-30T16:00:49.000Z" itemprop="datePublished">2015-12-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      POJ_3246_Game
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>题意是给你一堆点，让你删除一个点之后求剩下点所能构成的最大凸包</p>
+<h2 id="想法">想法</h2><pre><code>先构造凸包后，从凸包上遍历删点，重建凸包，O（N*Nlogn）。注意删点时的标记。
+另外发现<span class="keyword">int</span>和<span class="keyword">double</span>的计算时间差异略大。
+</code></pre><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">14957957&#9;zjwzcn07&#9;3246&#9;Accepted&#9;19516K&#9;3313MS&#9;G++&#9;2768B&#9;2015-11-30 16:00:49&#10;14957946&#9;zjwzcn07&#9;3246&#9;Accepted&#9;10096K&#9;1454MS&#9;G++&#9;2663B&#9;2015-11-30 15:56:16</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> point</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">double</span> x,y;</span><br><span class="line">	<span class="keyword">double</span> live;</span><br><span class="line">	<span class="keyword">int</span> par;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">det</span><span class="params">(point a,point b,point c,point d)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> x1=b.x-a.x,y1=b.y-a.y;</span><br><span class="line">	<span class="keyword">double</span> x2=d.x-c.x,y2=d.y-c.y;</span><br><span class="line">	<span class="keyword">return</span> x1*y2-x2*y1;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">dot</span><span class="params">(point a,point b,point c,point d)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> x1=b.x-a.x,y1=b.y-a.y;</span><br><span class="line">	<span class="keyword">double</span> x2=d.x-c.x,y2=d.y-c.y;</span><br><span class="line">	<span class="keyword">return</span> x1*x2+y1*y2;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">dist</span><span class="params">(point a,point b)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> xx=(a.x-b.x)*(a.x-b.x);</span><br><span class="line">	<span class="keyword">double</span> yy=(a.y-b.y)*(a.y-b.y);</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">sqrt</span>(xx+yy);</span><br><span class="line">&#125;</span><br><span class="line">point ps[<span class="number">100000</span>+<span class="number">5</span>];</span><br><span class="line">point orign_ps[<span class="number">100000</span>+<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> N;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp_x</span><span class="params">(<span class="keyword">const</span> point &amp;a,<span class="keyword">const</span> point &amp;b)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(a.live!=b.live)</span><br><span class="line">		<span class="keyword">return</span> a.live&gt;b.live;</span><br><span class="line">	<span class="keyword">if</span>(a.x!=b.x)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> a.x&lt;b.x;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> a.y&lt;b.y;</span><br><span class="line">	&#125;</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">vector</span>&lt;point&gt; convex_hull(point *ps,<span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> k=<span class="number">0</span>;</span><br><span class="line"><span class="comment">//puts("all origin point ");</span></span><br><span class="line">	<span class="comment">// for (int i = 0; i &lt; n; ++i)</span></span><br><span class="line">	<span class="comment">// &#123;</span></span><br><span class="line">	<span class="comment">// 	printf("%lf %lf\n",ps[i].x,ps[i].y );</span></span><br><span class="line">	<span class="comment">// &#125;</span></span><br><span class="line">	<span class="comment">//puts("");</span></span><br><span class="line">	<span class="built_in">vector</span>&lt;point&gt;qs(<span class="number">2</span>*n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span>(k&gt;<span class="number">1</span>&amp;&amp;(det(qs[k-<span class="number">2</span>],qs[k-<span class="number">1</span>],qs[k-<span class="number">1</span>],ps[i])&lt;=<span class="number">0</span>)) k--;</span><br><span class="line">		<span class="keyword">if</span>(ps[i].live==<span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line"></span><br><span class="line">			qs[k++]=ps[i];</span><br><span class="line">			<span class="comment">//if(!reduce)</span></span><br><span class="line">			qs[k-<span class="number">1</span>].par=i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n-<span class="number">2</span>,t=k;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span>(k&gt;t&amp;&amp;(det(qs[k-<span class="number">2</span>],qs[k-<span class="number">1</span>],qs[k-<span class="number">1</span>],ps[i])&lt;=<span class="number">0</span>))</span><br><span class="line">			k--;</span><br><span class="line">		<span class="keyword">if</span>(ps[i].live)</span><br><span class="line">		&#123;</span><br><span class="line"></span><br><span class="line">			qs[k++]=ps[i];</span><br><span class="line">			<span class="comment">//if(!reduce)</span></span><br><span class="line">			qs[k-<span class="number">1</span>].par=i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	qs.resize(k-<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">return</span> qs;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">area</span><span class="params">(point a,point b,point c)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> ans=det(b,a,b,c);</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">fabs</span>(ans)/<span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">solve</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	sort(ps,ps+N,cmp_x);</span><br><span class="line">	<span class="built_in">memcpy</span>(orign_ps,ps,N*(<span class="keyword">sizeof</span>(point)));</span><br><span class="line">	<span class="built_in">vector</span>&lt;point &gt;qs=convex_hull(ps,N);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//int n=N;</span></span><br><span class="line">	<span class="keyword">int</span> m=qs.size();</span><br><span class="line">	<span class="comment">//sort(qs.begin(),qs.end(),cmp_x);</span></span><br><span class="line">	<span class="comment">//puts("");</span></span><br><span class="line">	<span class="comment">// for(int i=0;i&lt;m;i++)</span></span><br><span class="line">	<span class="comment">// 	printf("whole convex_hull :%f %f\n",qs[i].x,qs[i].y );</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/*int tol=0;</span><br><span class="line">	for(int i=1;i&lt;m-1;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		tol+=area(qs[i],qs[0],qs[i+1]);</span><br><span class="line">	&#125;*/</span></span><br><span class="line">	<span class="comment">//printf("tol==%f\n", tol);</span></span><br><span class="line">	<span class="keyword">int</span> mmm=<span class="number">0x3f3f3f3f</span>;</span><br><span class="line">	<span class="keyword">double</span> ans=(<span class="keyword">double</span>)mmm;</span><br><span class="line">	<span class="keyword">bool</span> reduce = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> p=qs[i].par;</span><br><span class="line">		<span class="built_in">memcpy</span>(ps,orign_ps,N*(<span class="keyword">sizeof</span>(point)));</span><br><span class="line"></span><br><span class="line">		ps[p].live = <span class="number">0</span>;</span><br><span class="line">		sort(ps,ps+N,cmp_x);</span><br><span class="line">		<span class="built_in">vector</span>&lt;point &gt;qq=convex_hull(ps,N-<span class="number">1</span> );</span><br><span class="line">		<span class="keyword">int</span> mm=qq.size();</span><br><span class="line">		<span class="comment">// puts("after reduce convex_hull");</span></span><br><span class="line">		<span class="comment">// for(int i=0;i&lt;mm;i++)</span></span><br><span class="line">		<span class="comment">// printf("%d %d\n",qq[i].x,qq[i].y );</span></span><br><span class="line">		<span class="keyword">double</span> temp=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;mm-<span class="number">1</span>;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			temp+=area(qq[i],qq[<span class="number">0</span>],qq[i+<span class="number">1</span>]);</span><br><span class="line">		&#125;</span><br><span class="line">		ans=min(ans,temp);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//	printf("remove %d %d\n",ps[N-1].x,ps[N-1].y );</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">//reduce = 0;</span></span><br><span class="line">		<span class="comment">//sort(ps,ps+N,1);</span></span><br><span class="line">		<span class="comment">//int temp=area(qs[(i+1)%m],qs[i],qs[(i-1+m)%m]);</span></span><br><span class="line">		<span class="comment">//ans=max(ans,temp);</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">	<span class="comment">//return tol-ans;</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(~<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N)&amp;&amp;N)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;N;i++)</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%lf %lf"</span>,&amp;ps[i].x,&amp;ps[i].y),ps[i].live=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">double</span> ans=solve();</span><br><span class="line">		<span class="comment">//printf("%d.%s\n",ans/2,ans%2==1?"50":"00" );</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%.2f\n"</span>,ans );</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zjwzcn7.github.io/2015/12/01/POJ-3246-Game/" data-id="cihm6l8yl0004mcdg0lzu4yxt" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ACM——计算几何/">ACM——计算几何</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/12/01/POJ-2079-Triangle/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          POJ_2079_Triangle
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/11/06/Cypto-Miller-Rabin/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Cypto————Miller-Rabin的学习笔记与代码实现</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://www.zjwzcn07.com/2015/11/04/Cypto-Miller-Rabin/" data-title="Cypto————Miller-Rabin的学习笔记与代码实现 " data-url="http://www.zjwzcn07.com/2015/11/06/Cypto-Miller-Rabin/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zjwzcn07"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACM——计算几何/">ACM——计算几何</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cypto/">Cypto</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Social-Engineering/">Social Engineering</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ACM——计算几何/" style="font-size: 20px;">ACM——计算几何</a> <a href="/tags/Cypto/" style="font-size: 10px;">Cypto</a> <a href="/tags/Social-Engineering/" style="font-size: 10px;">Social Engineering</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/12/01/POJ-2079-Triangle/">POJ_2079_Triangle</a>
+          </li>
+        
+          <li>
+            <a href="/2015/12/01/POJ-3246-Game/">POJ_3246_Game</a>
+          </li>
+        
+          <li>
+            <a href="/2015/11/06/Cypto-Miller-Rabin/">Cypto————Miller-Rabin的学习笔记与代码实现</a>
+          </li>
+        
+          <li>
+            <a href="/2015/11/04/Social-Engineering_MobilePhone/">Social Engineering————手机很重要</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+<meta charset="UTF-8">
+<div class="widget tag">
+<h3 class="title">传送门</h3>
+<ul class="entry">
+<li></li>
+<li><a href="http://www.cnblogs.com/xingxing1024" title="努力的星星">努力的星星</a></li>
+<li><a href="https://wp-williamchenhouse.rhcloud.com/" title="萌萌的学弟">萌萌的学弟</a></li>
+<li><a href="http://0byjwzsf.me/" title="傲娇的金老板">傲娇的金老板</a></li>
+<li><a href="http://www.man1ac.me/" title="学霸的小凳子">学霸的小凳子</a></li>
+
+</ul>
+</div>
+  
+</aside>
+        
+      </div>
+      <div id="footer">
+  
+  <div id='foot-stars'></div>
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 zjwzcn07<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+      </script>
+      <span id="busuanzi_container_site_pv">
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+      </span>
+    </div>
+  </div>
+</div>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

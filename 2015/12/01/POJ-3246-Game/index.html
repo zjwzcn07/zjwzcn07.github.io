@@ -5,7 +5,7 @@
   
   <title>POJ_3246_Game | zjwzcn07</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="题意是给你一堆点，让你删除一个点之后求剩下点所能构成的最大凸包
+  <meta name="description" content="题意是给你一堆点，让你删除一个点之后求剩下点构成的凸包面积最小
 想法先构造凸包后，从凸包上遍历删点，重建凸包，O（N*Nlogn）。注意删点时的标记。
 另外发现int和double的计算时间差异略大。
 114957957&amp;#9;zjwzcn07&amp;#9;3246&amp;#9;Accepted&amp;#9;19516K&amp;#9;3313MS&amp;#9;G++&amp;#9;2768B&amp;#9;2015-11-30 16:00:4">
@@ -13,14 +13,14 @@
 <meta property="og:title" content="POJ_3246_Game">
 <meta property="og:url" content="http://zjwzcn7.github.io/2015/12/01/POJ-3246-Game/index.html">
 <meta property="og:site_name" content="zjwzcn07">
-<meta property="og:description" content="题意是给你一堆点，让你删除一个点之后求剩下点所能构成的最大凸包
+<meta property="og:description" content="题意是给你一堆点，让你删除一个点之后求剩下点构成的凸包面积最小
 想法先构造凸包后，从凸包上遍历删点，重建凸包，O（N*Nlogn）。注意删点时的标记。
 另外发现int和double的计算时间差异略大。
 114957957&amp;#9;zjwzcn07&amp;#9;3246&amp;#9;Accepted&amp;#9;19516K&amp;#9;3313MS&amp;#9;G++&amp;#9;2768B&amp;#9;2015-11-30 16:00:4">
-<meta property="og:updated_time" content="2015-11-30T16:37:21.926Z">
+<meta property="og:updated_time" content="2015-12-01T11:12:17.493Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="POJ_3246_Game">
-<meta name="twitter:description" content="题意是给你一堆点，让你删除一个点之后求剩下点所能构成的最大凸包
+<meta name="twitter:description" content="题意是给你一堆点，让你删除一个点之后求剩下点构成的凸包面积最小
 想法先构造凸包后，从凸包上遍历删点，重建凸包，O（N*Nlogn）。注意删点时的标记。
 另外发现int和double的计算时间差异略大。
 114957957&amp;#9;zjwzcn07&amp;#9;3246&amp;#9;Accepted&amp;#9;19516K&amp;#9;3313MS&amp;#9;G++&amp;#9;2768B&amp;#9;2015-11-30 16:00:4">
@@ -114,7 +114,7 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>题意是给你一堆点，让你删除一个点之后求剩下点所能构成的最大凸包</p>
+        <p>题意是给你一堆点，让你删除一个点之后求剩下点构成的凸包面积最小</p>
 <h2 id="想法">想法</h2><pre><code>先构造凸包后，从凸包上遍历删点，重建凸包，O（N*Nlogn）。注意删点时的标记。
 另外发现<span class="keyword">int</span>和<span class="keyword">double</span>的计算时间差异略大。
 </code></pre><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">14957957&#9;zjwzcn07&#9;3246&#9;Accepted&#9;19516K&#9;3313MS&#9;G++&#9;2768B&#9;2015-11-30 16:00:49&#10;14957946&#9;zjwzcn07&#9;3246&#9;Accepted&#9;10096K&#9;1454MS&#9;G++&#9;2663B&#9;2015-11-30 15:56:16</span><br></pre></td></tr></table></figure>

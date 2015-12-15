@@ -84,6 +84,67 @@ ga('send', 'pageview');
       <div class="outer">
         <section id="main">
   
+    <article id="[layout]-Codeforces-Round-101-Div-2" class="article article-type-[layout]" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/12/15/Codeforces-Round-101-Div-2/" class="article-date">
+  <time datetime="2015-12-15T13:48:09.000Z" itemprop="datePublished">2015-12-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/15/Codeforces-Round-101-Div-2/">Codeforces Round #101 (Div. 2) </a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="C-_Queue">C. Queue</h1><p><a href="http://codeforces.com/contest/141/problem/C" target="_blank" rel="external">link</a></p>
+<h2 id="题意">题意</h2><pre><code>给你<span class="keyword">N</span>个人排队，第i个人前有ai个人比他高，还原队伍情况，输出任意一种情况即可
+</code></pre><h2 id="解法">解法</h2><pre><code>按ai排序，假设当前<span class="built_in">i</span>的身高hi为<span class="built_in">i</span>-ai，从第一个到第<span class="built_in">i</span>-<span class="number">1</span>个扫描，遇到身高大于等于hi的当前身高加一即可。
+
+注意：从前往后扫是关键，这样不会影响后面的ai
+</code></pre><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> node</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> s[<span class="number">15</span>];</span><br><span class="line">    <span class="keyword">int</span> h,a;</span><br><span class="line">&#125;A[<span class="number">3000</span>+<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(node a,node b)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a.a&lt;b.a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span>  i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"\n%s %d"</span>,A[i].s,&amp;A[i].a);</span><br><span class="line">    &#125;</span><br><span class="line">    sort(A+<span class="number">1</span>,A+<span class="number">1</span>+n,cmp);</span><br><span class="line">    <span class="keyword">int</span> flag=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(A[i].a&lt;i)</span><br><span class="line">        &#123;</span><br><span class="line">            A[i].h=i-A[i].a;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;i;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(A[j].h&gt;=A[i].h)</span><br><span class="line">                    A[j].h++;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            flag=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!flag) <span class="built_in">puts</span>(<span class="string">"-1"</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%s %d\n"</span>,A[i].s,A[i].h);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zjwzcn7.github.io/2015/12/15/Codeforces-Round-101-Div-2/" data-id="cii7h6xtr000c0sdgm5i42uuh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Codeforce/">Codeforce</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://www.zjwzcn07.com/2015/11/04/Cypto-Miller-Rabin/" data-title="Cypto————Miller-Rabin的学习笔记与代码实现 " data-url="http://www.zjwzcn07.com/2015/11/06/Cypto-Miller-Rabin/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zjwzcn07"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+
+  
     <article id="[layout]-POJ-2079-Triangle" class="article article-type-[layout]" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/12/01/POJ-2079-Triangle/" class="article-date">
@@ -112,7 +173,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/12/01/POJ-2079-Triangle/" data-id="cihm6l8z10007mcdgwzqvvda7" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2015/12/01/POJ-2079-Triangle/" data-id="cii7h6xtr00070sdgm9h0xbxk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ACM——计算几何/">ACM——计算几何</a></li></ul>
@@ -171,7 +232,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/12/01/POJ-3246-Game/" data-id="cihm6l8yl0004mcdg0lzu4yxt" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2015/12/01/POJ-3246-Game/" data-id="cii7h6xtr00040sdg0m5kcmpf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ACM——计算几何/">ACM——计算几何</a></li></ul>
@@ -279,7 +340,7 @@ a属于Zn*是“N为合数的强证据”，如果不是强证据，则a^((<span
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/11/06/Cypto-Miller-Rabin/" data-id="cihm6l8z90009mcdgzesu2tpk" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2015/11/06/Cypto-Miller-Rabin/" data-id="cii7h6xtr00090sdgkd0xv7hl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cypto/">Cypto</a></li></ul>
@@ -356,7 +417,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/11/04/Social-Engineering_MobilePhone/" data-id="cihm6l8w00001mcdg7gnvl5ub" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2015/11/04/Social-Engineering_MobilePhone/" data-id="cii7h6xth00010sdgruuhfocu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Social-Engineering/">Social Engineering</a></li></ul>
@@ -396,7 +457,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACM——计算几何/">ACM——计算几何</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cypto/">Cypto</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Social-Engineering/">Social Engineering</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACM——计算几何/">ACM——计算几何</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Codeforce/">Codeforce</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cypto/">Cypto</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Social-Engineering/">Social Engineering</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -405,7 +466,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/ACM——计算几何/" style="font-size: 20px;">ACM——计算几何</a> <a href="/tags/Cypto/" style="font-size: 10px;">Cypto</a> <a href="/tags/Social-Engineering/" style="font-size: 10px;">Social Engineering</a>
+      <a href="/tags/ACM——计算几何/" style="font-size: 20px;">ACM——计算几何</a> <a href="/tags/Codeforce/" style="font-size: 10px;">Codeforce</a> <a href="/tags/Cypto/" style="font-size: 10px;">Cypto</a> <a href="/tags/Social-Engineering/" style="font-size: 10px;">Social Engineering</a>
     </div>
   </div>
 
@@ -414,7 +475,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -424,6 +485,10 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/12/15/Codeforces-Round-101-Div-2/">Codeforces Round #101 (Div. 2) </a>
+          </li>
         
           <li>
             <a href="/2015/12/01/POJ-2079-Triangle/">POJ_2079_Triangle</a>

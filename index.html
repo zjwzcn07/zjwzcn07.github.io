@@ -84,6 +84,135 @@ ga('send', 'pageview');
       <div class="outer">
         <section id="main">
   
+    <article id="[layout]-Letter-Game" class="article article-type-[layout]" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/12/23/Letter-Game/" class="article-date">
+  <time datetime="2015-12-23T09:55:00.000Z" itemprop="datePublished">2015-12-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/23/Letter-Game/">USACO-4.3-Letter Game</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##<a href="http://train.usaco.org/usacoprob2?a=UubaTSwgzjA&amp;S=lgame" target="_blank" rel="external">题意</a></p>
+<pre><code><span class="number">26</span>个字母每个字母有不同的权值。
+现在给你一串字符串S，里面的字母代表可供选择的。
+给你字典序排好的字典。
+问你可以由S中字母组成的单词或者词对中权值最大的有哪些。
+输出最大权值和这些单词或者词对
+如果词对重复例如prom rag和rag pro属于相同情况，取字典序小的情况。
+</code></pre><h2 id="思路">思路</h2><pre><code>规模较大，先去除字典中没用的单词,剩下的放进<span class="built_in">set</span>里面
+然后就是枚举模式串，<span class="number">7</span>!*<span class="number">7</span>*<span class="number">7</span> 的规模（不一定要完全用到给你的串里的所有字符）
+枚举使用next_permutation,值得注意的是，next_permutation的终止条件是所有元素递减，
+为了防止枚举不彻底，要先升序模式串
+然后细节较多，要有耐心
+</code></pre><h2 id="代码">代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/*</span><br><span class="line">ID: youqihe1</span><br><span class="line">PROG: lgame</span><br><span class="line">LANG: C++</span><br><span class="line">*/</span></span><br><span class="line"><span class="comment">//#pragma comment(linker,"/STACK:102400000,102400000")</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> ULL;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">double</span> LD;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> EPS = <span class="number">1e-6</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> INF = <span class="number">0x3fffffff</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">FILE *lgame  = fopen (<span class="string">"lgame.in"</span>, <span class="string">"r"</span>);</span><br><span class="line">FILE *fout = freopen (<span class="string">"lgame.out"</span>, <span class="string">"w"</span>,<span class="built_in">stdout</span>);</span><br><span class="line">FILE *fdict =fopen(<span class="string">"lgame.dict"</span>,<span class="string">"r"</span>);</span><br><span class="line"><span class="keyword">int</span> score[<span class="number">26</span>]=&#123;<span class="number">2</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">7</span>,<span class="number">6</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">5</span>,<span class="number">7</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> letter[<span class="number">26</span>];</span><br><span class="line"><span class="keyword">int</span> le[<span class="number">26</span>];</span><br><span class="line"><span class="keyword">char</span> mos[<span class="number">10</span>];</span><br><span class="line"><span class="built_in">set</span>&lt;<span class="built_in">string</span>&gt;A;</span><br><span class="line"><span class="keyword">int</span> num=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> ans=<span class="number">0</span>;</span><br><span class="line"><span class="built_in">set</span>&lt;<span class="built_in">string</span>&gt;B;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">fscanf</span>(lgame,<span class="string">"%s"</span>,mos);</span><br><span class="line">    <span class="keyword">int</span> len=<span class="built_in">strlen</span>(mos);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">        letter[mos[i]-<span class="string">'a'</span>]++;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">memset</span>(le,<span class="number">0</span>,<span class="keyword">sizeof</span>(le));</span><br><span class="line">        <span class="keyword">char</span> temp[<span class="number">10</span>];</span><br><span class="line">        <span class="built_in">memset</span>(temp,<span class="number">0</span>,<span class="keyword">sizeof</span>(temp));</span><br><span class="line">        <span class="built_in">fscanf</span>(fdict,<span class="string">"%s"</span>,temp);</span><br><span class="line">        <span class="keyword">if</span>(temp[<span class="number">0</span>]==<span class="string">'.'</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">int</span> tlen=<span class="built_in">strlen</span>(temp);</span><br><span class="line">        <span class="keyword">if</span>(tlen&gt;len)</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;tlen;i++)</span><br><span class="line">            le[temp[i]-<span class="string">'a'</span>]++;</span><br><span class="line">        <span class="keyword">int</span> flag=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)</span><br><span class="line">            <span class="keyword">if</span>(le[i]&gt;letter[i])</span><br><span class="line">        &#123;</span><br><span class="line">            flag=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(flag==<span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="built_in">string</span> s;</span><br><span class="line">        s.clear();</span><br><span class="line">        s=temp;</span><br><span class="line">        A.insert(s);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">set</span>&lt;<span class="built_in">string</span>&gt;::iterator it;</span><br><span class="line">    <span class="keyword">int</span> l=<span class="built_in">strlen</span>(mos);</span><br><span class="line">    sort(mos,mos+l);</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> sp=<span class="number">1</span>;sp&lt;=l;sp++)</span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=sp;i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">char</span> moss[<span class="number">10</span>];</span><br><span class="line">                <span class="built_in">memset</span>(moss,<span class="number">0</span>,<span class="keyword">sizeof</span>(moss));</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> ii=<span class="number">0</span>;ii&lt;sp;ii++)</span><br><span class="line">                moss[ii]=mos[ii];</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> j=sp;j&gt;i;j--)</span><br><span class="line">                &#123;</span><br><span class="line">                    moss[j]=moss[j-<span class="number">1</span>];</span><br><span class="line">                &#125;</span><br><span class="line">                moss[i]=<span class="string">' '</span>;</span><br><span class="line">                <span class="keyword">int</span> ll=sp+<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">if</span>(moss[ll-<span class="number">1</span>]!=<span class="string">' '</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">char</span> a[<span class="number">10</span>],b[<span class="number">10</span>];</span><br><span class="line">                    <span class="built_in">memset</span>(a,<span class="number">0</span>,<span class="keyword">sizeof</span>(a));</span><br><span class="line">                    <span class="built_in">memset</span>(b,<span class="number">0</span>,<span class="keyword">sizeof</span>(b));</span><br><span class="line">                    <span class="keyword">int</span> aa=<span class="number">0</span>,bb=<span class="number">0</span>;</span><br><span class="line">                    <span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">                    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;ll;i++)</span><br><span class="line">                        <span class="keyword">if</span>(moss[i]==<span class="string">' '</span>)</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                        <span class="keyword">else</span> a[aa++]=moss[i];</span><br><span class="line">                    <span class="keyword">for</span>(++i;i&lt;ll;i++)</span><br><span class="line">                        b[bb++]=moss[i];</span><br><span class="line">                    <span class="built_in">string</span> sa,sb;</span><br><span class="line">                    sa.clear();sb.clear();</span><br><span class="line">                    sa=a,sb=b;</span><br><span class="line">                    <span class="built_in">string</span> space=<span class="string">" "</span>;</span><br><span class="line">                    <span class="built_in">string</span> s1=a+space+b,s2=b+space+a;</span><br><span class="line">                    <span class="keyword">if</span>((A.find(sa)!=A.end())&amp;&amp;(A.find(sb)!=A.end()))</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">if</span>(B.find(s2)==B.end())</span><br><span class="line">                        B.insert(s1);</span><br><span class="line">                        <span class="keyword">else</span></span><br><span class="line">                        &#123;</span><br><span class="line">                            <span class="keyword">if</span>(s1&lt;s2)</span><br><span class="line">                            &#123;</span><br><span class="line">                                B.erase(s2);</span><br><span class="line">                                B.insert(s1);</span><br><span class="line">                            &#125;</span><br><span class="line">                            <span class="keyword">else</span></span><br><span class="line">                                <span class="keyword">continue</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(A.find(sa)!=A.end()) B.insert(sa);</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(A.find(sb)!=A.end()) B.insert(sb);</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">string</span> mode;</span><br><span class="line">                    mode.clear();</span><br><span class="line">                    mode=moss;</span><br><span class="line">                    mode.erase(ll-<span class="number">1</span>);</span><br><span class="line">                    <span class="keyword">if</span>(A.find(mode)==A.end())</span><br><span class="line">                        <span class="keyword">continue</span>;</span><br><span class="line">                    B.insert(mode);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">while</span>(next_permutation(mos,mos+l));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(it=B.begin();it!=B.end();it++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> temp=<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">string</span> t=*it;</span><br><span class="line">        <span class="keyword">int</span> l=t.length();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;l;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(t[i]==<span class="string">' '</span>)</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            temp+=score[t[i]-<span class="string">'a'</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        ans=max(temp,ans);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,ans);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(it=B.begin();it!=B.end();it++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> temp=<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">string</span> t=*it;</span><br><span class="line">        <span class="keyword">int</span> l=t.length();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;l;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(t[i]==<span class="string">' '</span>)</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            temp+=score[t[i]-<span class="string">'a'</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(temp==ans)</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;t&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zjwzcn7.github.io/2015/12/23/Letter-Game/" data-id="ciij0g2xf000mbwdgx2z3wujs" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="[layout]-Letter-Game" data-title="USACO-4.3-Letter Game" data-url="undefined"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zjwzcn07"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+
+  
+    <article id="[layout]-Street-Race" class="article article-type-[layout]" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/12/23/Street-Race/" class="article-date">
+  <time datetime="2015-12-23T09:54:38.000Z" itemprop="datePublished">2015-12-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/23/Street-Race/">USACO-4.3-Street Race</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##<a href="http://train.usaco.org/usacoprob2?a=UubaTSwgzjA&amp;S=race3" target="_blank" rel="external">题意</a></p>
+<pre><code>给你一副连通图，起点到终点之间有很多条路和路口，起点出发最后会汇于终点。
+第一个任务：找出点集，这些点为起点到终点必经之路。
+第二个任务：找到点集，这些点满足如下条件
+    将图分为两部分，使得起点从起点出发后最终都会汇于该点，然后该点出发最后汇于终点。
+</code></pre><h2 id="思路">思路</h2><pre><code>枚举去掉每一个点，dfs，若不能到达则是必经之路。
+在一任务的点集里面遍历，将其去掉，dfs，看是否会走回到这个点之前位置，是的话则不符合条件
+</code></pre><h2 id="代码">代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/*</span><br><span class="line">ID: youqihe1</span><br><span class="line">PROG: race3</span><br><span class="line">LANG: C++</span><br><span class="line">*/</span></span><br><span class="line"><span class="comment">//#pragma comment(linker,"/STACK:102400000,102400000")</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">FILE *fin  = freopen (<span class="string">"race3.in"</span>, <span class="string">"r"</span>,<span class="built_in">stdin</span>);</span><br><span class="line">FILE *fout = freopen (<span class="string">"race3.out"</span>, <span class="string">"w"</span>,<span class="built_in">stdout</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> mapp[<span class="number">55</span>][<span class="number">55</span>];</span><br><span class="line"><span class="keyword">int</span> cross[<span class="number">55</span>];</span><br><span class="line"><span class="keyword">int</span> c=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">bool</span> vis[<span class="number">55</span>];</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> flag=<span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> k)</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="comment">//    if(vis[k])</span></span><br><span class="line"><span class="comment">//        return ;</span></span><br><span class="line">    vis[k]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=mapp[k][<span class="number">0</span>];i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(mapp[k][i]==n-<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            flag=<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=mapp[k][<span class="number">0</span>];i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(vis[mapp[k][i]]==<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            vis[mapp[k][i]]=<span class="number">1</span>;</span><br><span class="line">            dfs(mapp[k][i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> flag2=<span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs2</span><span class="params">(<span class="keyword">int</span> k,<span class="keyword">int</span> v)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    vis[k]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=mapp[k][<span class="number">0</span>];i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(mapp[k][i]&lt;v)</span><br><span class="line">        &#123;</span><br><span class="line">            flag2=<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=mapp[k][<span class="number">0</span>];i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(vis[mapp[k][i]]==<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            vis[mapp[k][i]]=<span class="number">1</span>;</span><br><span class="line">            dfs2(mapp[k][i],v);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> mid[<span class="number">55</span>];</span><br><span class="line"><span class="keyword">int</span> m=<span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    n=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> a;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a);</span><br><span class="line">        <span class="keyword">if</span>(a==-<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">if</span>(a==-<span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            n++;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mapp[n][++mapp[n][<span class="number">0</span>]]=a;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">memset</span>(vis,<span class="number">0</span>,<span class="keyword">sizeof</span>(vis));</span><br><span class="line">        flag=<span class="number">0</span>;</span><br><span class="line">        vis[i]=<span class="number">1</span>;</span><br><span class="line">        dfs(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">if</span>(flag==<span class="number">0</span>)</span><br><span class="line">            cross[c++]=i;</span><br><span class="line">    &#125;</span><br><span class="line">    sort(cross,cross+c);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d"</span>,c);</span><br><span class="line">    <span class="keyword">if</span>(c==<span class="number">0</span>)<span class="built_in">puts</span>(<span class="string">""</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">" "</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;c;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d"</span>,cross[i]);</span><br><span class="line">        <span class="keyword">if</span>(i!=c-<span class="number">1</span>)<span class="built_in">printf</span>(<span class="string">" "</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">puts</span>(<span class="string">""</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;c;j++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> i=cross[j];</span><br><span class="line">        flag2=<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">memset</span>(vis,<span class="number">0</span>,<span class="keyword">sizeof</span>(vis));</span><br><span class="line">        vis[i]=<span class="number">1</span>;</span><br><span class="line">        dfs2(i,i);</span><br><span class="line">        <span class="keyword">if</span>(!flag2)</span><br><span class="line">            mid[m++]=i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d"</span>,m);</span><br><span class="line">    <span class="keyword">if</span>(m==<span class="number">0</span>)<span class="built_in">puts</span>(<span class="string">""</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">" "</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d"</span>,mid[i]);</span><br><span class="line">        <span class="keyword">if</span>(i!=m-<span class="number">1</span>)<span class="built_in">printf</span>(<span class="string">" "</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">puts</span>(<span class="string">""</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zjwzcn7.github.io/2015/12/23/Street-Race/" data-id="ciij0g2uj0006bwdgjxvk25hu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="[layout]-Street-Race" data-title="USACO-4.3-Street Race" data-url="undefined"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zjwzcn07"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+
+  
     <article id="[layout]-Job-Processing" class="article article-type-[layout]" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/12/21/Job-Processing/" class="article-date">
@@ -115,7 +244,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/12/21/Job-Processing/" data-id="ciifwmr7x000kz4dg1y8x9o6c" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2015/12/21/Job-Processing/" data-id="ciij0g2ya000obwdgkixu6ooz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
@@ -173,7 +302,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/12/21/The-Perfect-Stall/" data-id="ciifwmr770001z4dgw3twy2zv" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2015/12/21/The-Perfect-Stall/" data-id="ciij0g2cf0001bwdgyqs4wikz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
@@ -236,7 +365,7 @@ s条边，编号<span class="keyword">ci</span>，长度<span class="keyword">li
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/12/21/Fence-Loops/" data-id="ciifwmr81000mz4dgge5e4jb4" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2015/12/21/Fence-Loops/" data-id="ciij0g2yn000qbwdgeegpquam" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
@@ -293,7 +422,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/12/20/Beef-McNuggets/" data-id="ciifwmr8t000yz4dgjzsjp0xv" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2015/12/20/Beef-McNuggets/" data-id="ciij0g3190012bwdgxregrn4z" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
@@ -353,7 +482,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/12/19/Electric-Fence/" data-id="ciifwmr84000oz4dgp01djzim" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2015/12/19/Electric-Fence/" data-id="ciij0g2zh000sbwdgmwpqnw7i" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
@@ -423,7 +552,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/12/19/Camelot/" data-id="ciifwmr8p000wz4dgrm6c32qz" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2015/12/19/Camelot/" data-id="ciij0g3110010bwdgwd67y04w" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
@@ -483,7 +612,7 @@ b种要买商品，买ki个<span class="keyword">ci</span>商品，单价pi；
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/12/19/Shopping-Offers/" data-id="ciifwmr7j0009z4dg6i96vxbl" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2015/12/19/Shopping-Offers/" data-id="ciij0g2v6000bbwdgxghnuqlr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
@@ -542,7 +671,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/12/18/Range/" data-id="ciifwmr7o000dz4dgraxttucm" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2015/12/18/Range/" data-id="ciij0g2w1000fbwdgf1xqdjbz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
@@ -554,127 +683,6 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
 
 <!-- 多说评论框 start -->
   <div class="ds-thread" data-thread-key="[layout]-Range" data-title="USACO-3.3-Home on the Range" data-url="undefined"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"zjwzcn07"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-  </script>
-<!-- 多说公共JS代码 end -->
-
-
-  
-    <article id="[layout]-Riding-the-Fences" class="article article-type-[layout]" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/12/18/Riding-the-Fences/" class="article-date">
-  <time datetime="2015-12-17T16:26:33.000Z" itemprop="datePublished">2015-12-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/18/Riding-the-Fences/">USACO-3.3-Riding the Fences</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="题意"><a href="http://train.usaco.org/usacoprob2?a=NQcblEJc8kZ&amp;S=fence" target="_blank" rel="external">题意</a></h2><pre><code>欧拉回路，注意：可能有自环；
-</code></pre><h2 id="欧拉回路做法">欧拉回路做法</h2><pre><code>定理<span class="number">1</span>：一个图有欧拉回路当且仅当它是连通的（即不包括<span class="number">0</span>度的结点）且每个结点都有偶数度。 
-定理<span class="number">2</span>：一个图有欧拉通路当且仅当它是连通的且除两个结点外，其他结点都有偶数度。 
-定理<span class="number">3</span>：在定理<span class="number">2</span>的条件下，含奇数度的两个结点中，一个必为欧拉通路的起点，另一个必为终点。
-</code></pre><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#36873;&#21462;&#19968;&#20010;&#39030;&#28857;&#65292;&#36827;&#34892;&#22914;&#19979;&#36882;&#24402;&#10;&#9;&#33509;&#35813;&#39030;&#28857;&#26377;&#37051;&#33410;&#28857;&#65292;&#21017;&#21024;&#25481;&#36825;&#26465;&#36335;&#65292;&#36882;&#24402;&#36825;&#20010;&#37051;&#33410;&#28857;&#10;&#9;&#33509;&#26080;&#37051;&#33410;&#28857;&#65292;&#21017;&#23558;&#27492;&#36335;&#20445;&#23384;&#33267;&#22238;&#36335;&#20013;</span><br></pre></td></tr></table></figure>
-<h2 id="代码">代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/*</span><br><span class="line">ID: youqihe1</span><br><span class="line">PROG: fence</span><br><span class="line">LANG: C++</span><br><span class="line">*/</span></span><br><span class="line"><span class="comment">//#pragma comment(linker,"/STACK:102400000,102400000")</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">FILE *fin  = freopen (<span class="string">"fence.in"</span>, <span class="string">"r"</span>,<span class="built_in">stdin</span>);</span><br><span class="line">FILE *fout = freopen (<span class="string">"fence.out"</span>, <span class="string">"w"</span>,<span class="built_in">stdout</span>);</span><br><span class="line"><span class="keyword">int</span> nextt[<span class="number">505</span>][<span class="number">505</span>];</span><br><span class="line"><span class="keyword">int</span> num[<span class="number">505</span>];</span><br><span class="line"><span class="keyword">int</span> mapp[<span class="number">505</span>][<span class="number">505</span>];</span><br><span class="line"><span class="keyword">int</span> ans[<span class="number">505</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x)</span></span><br><span class="line"></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = nextt[x][<span class="number">0</span>];i &gt;= <span class="number">1</span>;i--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> t = nextt[x][i];</span><br><span class="line">		<span class="keyword">if</span> (!(mapp[x][t] &amp;&amp; mapp[t][x]))</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		mapp[x][t] --; mapp[t][x] --;</span><br><span class="line">		<span class="comment">//mapp[x][t]=mapp[t][x]=0;</span></span><br><span class="line">		num[x]--;</span><br><span class="line">		num[t]--;</span><br><span class="line">		dfs(t);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (num[x] == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		ans[++ans[<span class="number">0</span>]] = x;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x&gt;y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">	<span class="keyword">int</span> m = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> a, b;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;a, &amp;b);</span><br><span class="line">		nextt[a][++nextt[a][<span class="number">0</span>]] = b;</span><br><span class="line">		nextt[b][++nextt[b][<span class="number">0</span>]] = a;</span><br><span class="line">		mapp[a][b]++;mapp[b][a] ++;</span><br><span class="line">		<span class="comment">//mapp[a][b]=mapp[b][a]=1;</span></span><br><span class="line">		num[a]++;</span><br><span class="line">		num[b]++;</span><br><span class="line">		m = max(m, max(a, b));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		sort(nextt[i] + <span class="number">1</span>, nextt[i] + nextt[i][<span class="number">0</span>]+<span class="number">1</span>, cmp);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> p = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= m;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (nextt[i][<span class="number">0</span>] &amp; <span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			p = i;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	dfs(p);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = ans[<span class="number">0</span>];i &gt;= <span class="number">1</span>;i--)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, ans[i]);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/12/18/Riding-the-Fences/" data-id="ciifwmr7m000bz4dgoq9zp3hz" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="[layout]-Riding-the-Fences" data-title="USACO-3.3-Riding the Fences" data-url="undefined"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"zjwzcn07"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-  </script>
-<!-- 多说公共JS代码 end -->
-
-
-  
-    <article id="[layout]-Sweet-Butter" class="article article-type-[layout]" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/12/18/Sweet-Butter/" class="article-date">
-  <time datetime="2015-12-17T16:12:10.000Z" itemprop="datePublished">2015-12-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/18/Sweet-Butter/">USACO-3.2-Sweet Butter</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="题意"><a href="http://train.usaco.org/usacoprob2?a=NQcblEJc8kZ&amp;S=butter" target="_blank" rel="external">题意</a></h2><pre><code>有<span class="keyword">N</span>头奶牛，P个牧场，<span class="keyword">C</span>条路，让牛在哪个牧场汇合使得总路程最短
-</code></pre><h2 id="思路">思路</h2><pre><code>spfa求得每个点到其他点的最短路，遍历寻找终点即可。
-<span class="function"><span class="title">spfa</span><span class="params">(Shortest Path Faster Algorithm)</span></span>，维护一个队列，将起点放入，用bool数组记录是否在队列中。
-</code></pre><p>用d[]记录s点到i点的最短路。然后，迭代，出队（且bool置0），将其每个邻接点松弛化后，如果未在队列中，则<br>入队，bool为1。循环直到队列为空。</p>
-<h2 id="代码">代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span><br><span class="line">ID: youqihe1</span><br><span class="line">PROG: butter</span><br><span class="line">LANG: C++</span><br><span class="line">*/</span></span><br><span class="line"><span class="comment">//#pragma comment(linker,"/STACK:102400000,102400000")</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> INF = <span class="number">0x3fffffff</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">FILE *fin  = freopen (<span class="string">"butter.in"</span>, <span class="string">"r"</span>,<span class="built_in">stdin</span>);</span><br><span class="line">FILE *fout = freopen (<span class="string">"butter.out"</span>, <span class="string">"w"</span>,<span class="built_in">stdout</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> next[<span class="number">805</span>][<span class="number">805</span>];</span><br><span class="line"><span class="keyword">int</span> mapp[<span class="number">805</span>][<span class="number">805</span>];</span><br><span class="line"><span class="keyword">int</span> dis[<span class="number">805</span>][<span class="number">805</span>];</span><br><span class="line"><span class="keyword">bool</span> vit[<span class="number">805</span>];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">spfa</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span> s)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="built_in">queue</span>&lt;<span class="keyword">int</span> &gt;Q;</span><br><span class="line">    <span class="keyword">int</span> t;</span><br><span class="line">    <span class="built_in">memset</span>(vit,<span class="number">0</span>,<span class="keyword">sizeof</span>(vit));</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">        dis[s][i]=INF;</span><br><span class="line">    dis[s][s]=<span class="number">0</span>,vit[s]=<span class="number">1</span>;</span><br><span class="line">    Q.push(s);</span><br><span class="line">    <span class="keyword">while</span>(!Q.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> p=Q.front();Q.pop();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=next[p][<span class="number">0</span>];i++)</span><br><span class="line">        &#123;</span><br><span class="line">            t=next[p][i];</span><br><span class="line">            <span class="keyword">if</span>(dis[s][p]+mapp[p][t]&lt;dis[s][t])</span><br><span class="line">            &#123;</span><br><span class="line">                dis[s][t]=dis[s][p]+mapp[p][t];</span><br><span class="line">                <span class="keyword">if</span>(!vit[t])</span><br><span class="line">                &#123;</span><br><span class="line">                    Q.push(t);</span><br><span class="line">                    vit[t]=<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        vit[p]=<span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> Cow[<span class="number">805</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> N,P,C;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>,&amp;N,&amp;P,&amp;C);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;N;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> a;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a);</span><br><span class="line">        Cow[a]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;C;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> x,y,d;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>,&amp;x,&amp;y,&amp;d);</span><br><span class="line">        mapp[x][y]=mapp[y][x]=d;</span><br><span class="line">        next[x][++next[x][<span class="number">0</span>]]=y;</span><br><span class="line">        next[y][++next[y][<span class="number">0</span>]]=x;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=P;i++)</span><br><span class="line">    spfa(P,i);</span><br><span class="line">    <span class="keyword">int</span> ans=INF;</span><br><span class="line">    <span class="keyword">int</span> pp=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=P;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> temp=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=P;j++)</span><br><span class="line">            temp+=Cow[j]*dis[i][j];</span><br><span class="line">        <span class="keyword">if</span>(temp&lt;ans) pp=i;</span><br><span class="line">        ans=min(ans,temp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,ans);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/12/18/Sweet-Butter/" data-id="ciifwmr7f0004z4dghbwanovw" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="[layout]-Sweet-Butter" data-title="USACO-3.2-Sweet Butter" data-url="undefined"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -707,7 +715,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACM——计算几何/">ACM——计算几何</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Codeforce/">Codeforce</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cypto/">Cypto</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Social-Engineering/">Social Engineering</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USACO/">USACO</a><span class="tag-list-count">10</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACM——计算几何/">ACM——计算几何</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Codeforce/">Codeforce</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cypto/">Cypto</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Social-Engineering/">Social Engineering</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USACO/">USACO</a><span class="tag-list-count">12</span></li></ul>
     </div>
   </div>
 
@@ -725,7 +733,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -737,6 +745,14 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
       <ul>
         
           <li>
+            <a href="/2015/12/23/Letter-Game/">USACO-4.3-Letter Game</a>
+          </li>
+        
+          <li>
+            <a href="/2015/12/23/Street-Race/">USACO-4.3-Street Race</a>
+          </li>
+        
+          <li>
             <a href="/2015/12/21/Job-Processing/">USACO-4.2-Job Processing</a>
           </li>
         
@@ -746,14 +762,6 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
         
           <li>
             <a href="/2015/12/21/Fence-Loops/">USACO-4.1-Fence Loops</a>
-          </li>
-        
-          <li>
-            <a href="/2015/12/20/Beef-McNuggets/">USACO-4.1-Beef McNuggets</a>
-          </li>
-        
-          <li>
-            <a href="/2015/12/19/Electric-Fence/">USACO-3.4-Electric Fence</a>
           </li>
         
       </ul>

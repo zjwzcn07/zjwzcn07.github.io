@@ -3,33 +3,42 @@
 <head>
   <meta charset="utf-8">
   
-  <title>USACO-3.4-Electric Fence | zjwzcn07</title>
+  <title>USACO-5.5-hidden | zjwzcn07</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="题意简化之，就是左边内给你个三角形，问你三角形里面有几个格点
-解法运用pick定理:
-顶点坐标均是整点的简单多边形：面积=内部格点数目+边上格点数目/2-1 
-
-两点组成的线段的通过格点数目=gcd(abs(x1-x2),abs(y1-y2))+1。
-代码1234567891011121314151617181920212223242526272829303132/*ID: youqihe1PRO">
+  <meta name="description" content="题意一个字符串首尾成环，从哪个位置开始读入的字符串的值最小，如albabla,
+有以下表示方法：
+albabla、lbablaa、bablaal、ablaalb、blaalba、laalbab、aalbabl
+而答案是aalbabl
+解其实就是最小表示法的学习
+参见国家集训队周源文章
+    可将源串s后面再加一串自己，即S=s+s
+    首先i=0，j=2
+    若S[i+k]&amp;gt;S[j">
 <meta property="og:type" content="article">
-<meta property="og:title" content="USACO-3.4-Electric Fence">
-<meta property="og:url" content="http://zjwzcn7.github.io/2015/12/19/Electric-Fence/index.html">
+<meta property="og:title" content="USACO-5.5-hidden">
+<meta property="og:url" content="http://zjwzcn7.github.io/2016/02/07/hidden/index.html">
 <meta property="og:site_name" content="zjwzcn07">
-<meta property="og:description" content="题意简化之，就是左边内给你个三角形，问你三角形里面有几个格点
-解法运用pick定理:
-顶点坐标均是整点的简单多边形：面积=内部格点数目+边上格点数目/2-1 
-
-两点组成的线段的通过格点数目=gcd(abs(x1-x2),abs(y1-y2))+1。
-代码1234567891011121314151617181920212223242526272829303132/*ID: youqihe1PRO">
-<meta property="og:updated_time" content="2015-12-19T13:08:05.614Z">
+<meta property="og:description" content="题意一个字符串首尾成环，从哪个位置开始读入的字符串的值最小，如albabla,
+有以下表示方法：
+albabla、lbablaa、bablaal、ablaalb、blaalba、laalbab、aalbabl
+而答案是aalbabl
+解其实就是最小表示法的学习
+参见国家集训队周源文章
+    可将源串s后面再加一串自己，即S=s+s
+    首先i=0，j=2
+    若S[i+k]&amp;gt;S[j">
+<meta property="og:updated_time" content="2016-02-10T07:37:08.846Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="USACO-3.4-Electric Fence">
-<meta name="twitter:description" content="题意简化之，就是左边内给你个三角形，问你三角形里面有几个格点
-解法运用pick定理:
-顶点坐标均是整点的简单多边形：面积=内部格点数目+边上格点数目/2-1 
-
-两点组成的线段的通过格点数目=gcd(abs(x1-x2),abs(y1-y2))+1。
-代码1234567891011121314151617181920212223242526272829303132/*ID: youqihe1PRO">
+<meta name="twitter:title" content="USACO-5.5-hidden">
+<meta name="twitter:description" content="题意一个字符串首尾成环，从哪个位置开始读入的字符串的值最小，如albabla,
+有以下表示方法：
+albabla、lbablaa、bablaal、ablaalb、blaalba、laalbab、aalbabl
+而答案是aalbabl
+解其实就是最小表示法的学习
+参见国家集训队周源文章
+    可将源串s后面再加一串自己，即S=s+s
+    首先i=0，j=2
+    若S[i+k]&amp;gt;S[j">
 <meta name="twitter:creator" content="@coolwuxing">
   
     <link rel="alternative" href="/atom.xml" title="zjwzcn07" type="application/atom+xml">
@@ -98,10 +107,10 @@ ga('send', 'pageview');
   </div>
 </div>
       <div class="outer">
-        <section id="main"><article id="[layout]-Electric-Fence" class="article article-type-[layout]" itemscope itemprop="blogPost">
+        <section id="main"><article id="[layout]-hidden" class="article article-type-[layout]" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/12/19/Electric-Fence/" class="article-date">
-  <time datetime="2015-12-19T13:02:58.000Z" itemprop="datePublished">2015-12-19</time>
+    <a href="/2016/02/07/hidden/" class="article-date">
+  <time datetime="2016-02-07T10:56:57.000Z" itemprop="datePublished">2016-02-07</time>
 </a>
     
   </div>
@@ -112,7 +121,7 @@ ga('send', 'pageview');
         
   
     <h1 class="article-title" itemprop="name">
-      USACO-3.4-Electric Fence
+      USACO-5.5-hidden
     </h1>
   
 
@@ -120,16 +129,22 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="题意"><a href="http://train.usaco.org/usacoanal2?a=nskdH5VU1W2&amp;S=fence9" target="_blank" rel="external">题意</a></h2><pre><code>简化之，就是左边内给你个三角形，问你三角形里面有几个格点
-</code></pre><h2 id="解法">解法</h2><pre><code>运用pick定理:
-顶点坐标均是整点的简单多边形：面积=内部格点数目+边上格点数目/<span class="number">2</span>-<span class="number">1</span> 
-
-两点组成的线段的通过格点数目=<span class="function"><span class="title">gcd</span><span class="params">(abs(x1-x2)</span></span>,<span class="function"><span class="title">abs</span><span class="params">(y1-y2)</span></span>)+<span class="number">1</span>。
-</code></pre><h2 id="代码">代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span><br><span class="line">ID: youqihe1</span><br><span class="line">PROG: fence9</span><br><span class="line">LANG: C++</span><br><span class="line">*/</span></span><br><span class="line"><span class="comment">//#pragma comment(linker,"/STACK:102400000,102400000")</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">FILE *fin  = freopen (<span class="string">"fence9.in"</span>, <span class="string">"r"</span>,<span class="built_in">stdin</span>);</span><br><span class="line">FILE *fout = freopen (<span class="string">"fence9.out"</span>, <span class="string">"w"</span>,<span class="built_in">stdout</span>);</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> b==<span class="number">0</span>?a:gcd(b,a%b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">double</span> a,b,c;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%lf %lf %lf"</span>,&amp;a,&amp;b,&amp;c);</span><br><span class="line">    <span class="keyword">double</span> S=b*c/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">int</span> aa=(<span class="keyword">int</span>)a,bb=(<span class="keyword">int</span>)b,cc=(<span class="keyword">int</span> )c;</span><br><span class="line">    <span class="keyword">int</span> sidePoint=cc+<span class="number">1</span>+gcd(aa,bb);</span><br><span class="line">    <span class="keyword">if</span>(aa==cc) sidePoint+=bb-<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> sidePoint+=gcd(<span class="built_in">abs</span>(aa-cc),bb)-<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">double</span> inPoint=(S+<span class="number">1</span>-(<span class="keyword">double</span>)(sidePoint)/<span class="number">2</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%.0f\n"</span>,inPoint);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h2 id="题意">题意</h2><pre><code>一个字符串首尾成环，从哪个位置开始读入的字符串的值最小，如albabla,
+有以下表示方法：
+<span class="label">albabla</span>、lbablaa、<span class="keyword">bablaal、ablaalb、blaalba、laalbab、aalbabl
+</span>而答案是aalbabl
+</code></pre><h2 id="解">解</h2><pre><code>其实就是最小表示法的学习
+</code></pre><p><a href="http://wenku.baidu.com/view/0e1a6013a216147917112820.html" target="_blank" rel="external">参见国家集训队周源文章</a></p>
+<pre><code>    可将源串s后面再加一串自己，即S=s+s
+    首先<span class="built_in">i</span>=<span class="number">0</span>，<span class="built_in">j</span>=<span class="number">2</span>
+    若S<span class="matrix">[i+k]</span>&gt;S<span class="matrix">[j+k]</span>,显然<span class="built_in">i</span>到<span class="built_in">i</span>+k都不会是最小表示，从<span class="built_in">i</span>到<span class="built_in">j</span>-<span class="number">1</span>也不会是最小表示，
+所以<span class="built_in">i</span>+k+<span class="number">1</span>小于<span class="built_in">j</span>时，<span class="built_in">i</span>就会变成<span class="built_in">j</span>，否则变成<span class="built_in">i</span>+k+<span class="number">1</span>,而无论如何，<span class="built_in">j</span>变成<span class="built_in">i</span>+<span class="number">1</span>；
+    反之，<span class="built_in">j</span>直接变成<span class="built_in">j</span>+k+<span class="number">1</span>；
+</code></pre><h2 id="代码">代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">char</span> S[<span class="number">100000</span>+<span class="number">5</span>];</span><br><span class="line"><span class="keyword">char</span> SS[<span class="number">200000</span>+<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> N;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N);</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">char</span> temp[<span class="number">100</span>];</span><br><span class="line">        <span class="built_in">memset</span>(temp,<span class="number">0</span>,<span class="keyword">sizeof</span>(temp));</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%s"</span>,temp);</span><br><span class="line">        <span class="built_in">strcat</span>(S,temp);</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">strlen</span>(temp)&lt;<span class="number">72</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">strcpy</span>(SS,S);</span><br><span class="line">    <span class="built_in">strcat</span>(SS,S);</span><br><span class="line">    <span class="keyword">int</span> i=<span class="number">0</span>,j=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(j&lt;N)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> k=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>( k=<span class="number">0</span>;k&lt;N;k++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(SS[i+k]!=SS[j+k])</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(k==N)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">if</span>(SS[i+k]&gt;SS[j+k])</span><br><span class="line">            i=i+k+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            j=j+k+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(j==i)j++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,i);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/12/19/Electric-Fence/" data-id="cikgixcua001cewdgy6m07j8u" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2016/02/07/hidden/" data-id="cikgixcs70004ewdgo5hqf4kn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
@@ -140,19 +155,19 @@ ga('send', 'pageview');
     
 <nav id="article-nav">
   
-    <a href="/2015/12/20/Beef-McNuggets/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/02/10/A-Rectangular-Barn/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          USACO-4.1-Beef McNuggets
+          USACO-6.1-A RectangularBarn
         
       </div>
     </a>
   
   
-    <a href="/2015/12/19/Camelot/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/02/07/classical-crypto/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">USACO-3.3-Camelot</div>
+      <div class="article-nav-title">Classical Encrypt</div>
     </a>
   
 </nav>
@@ -161,7 +176,7 @@ ga('send', 'pageview');
 </article>
 
 <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="[layout]-Electric-Fence" data-title="USACO-3.4-Electric Fence" data-url="http://zjwzcn7.github.io/2015/12/19/Electric-Fence/"></div>
+  <div class="ds-thread" data-thread-key="[layout]-hidden" data-title="USACO-5.5-hidden" data-url="http://zjwzcn7.github.io/2016/02/07/hidden/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

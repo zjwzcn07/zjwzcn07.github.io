@@ -84,6 +84,252 @@ ga('send', 'pageview');
       <div class="outer">
         <section id="main">
   
+    <article id="[layout]-classical-crypto" class="article article-type-[layout]" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/14/classical-crypto/" class="article-date">
+  <time datetime="2016-02-14T09:09:22.000Z" itemprop="datePublished">2016-02-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/14/classical-crypto/">《现代密码学--原理与协议》学习笔记———经典密码学</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1、Caesar">1、Caesar</h2><pre><code>密钥k是一个<span class="number">0</span>到<span class="number">25</span>之间的数，那么加密时，字母移动k个位置，映射到加密算法中。
+</code></pre><h3 id="1-1、Gen">1.1、Gen</h3><pre><code>输出一个在{<span class="number">0.</span>.<span class="number">.25</span>}中的随机数k
+</code></pre><h3 id="1-2、Enc">1.2、Enc</h3><pre><code>明文Mi， 密钥K， 得到密文Ci=[<span class="comment">(Mi+K)</span><span class="preprocessor">%</span><span class="number">26</span>];
+明文的消息空间只包括英语字母表中的字符
+</code></pre><h3 id="1-3、Dec">1.3、Dec</h3><pre><code>密文Ci， 密钥K， 解得明文Mi=[(Ci-K+<span class="number">26</span>)%<span class="number">26</span>];
+</code></pre><h3 id="1-4、Attack">1.4、Attack</h3><pre><code>暴力枚举+统计学
+设pi为各字母ai的频率，由统计学已知
+S_<span class="list">{r}</span> = \sum_<span class="list">{i=0}</span>^<span class="list">{25}</span> q_<span class="list">{i}</span>^<span class="number">2</span>  \approx <span class="number">0.065</span>
+那么统计密文各个字母频率qi
+枚举j，使得Ij接近<span class="number">0.065</span>
+I_<span class="list">{j}</span> = \sum_<span class="list">{i=0}</span>^<span class="list">{25}</span> q_<span class="list">{i}</span> * q_<span class="list">{i+j}</span>
+则密钥k=j 
+</code></pre><h3 id="1-5、Work_out">1.5、Work out</h3><p><img src="Caesar.png" alt="Caesar"></p>
+<h3 id="1-6、Code">1.6、Code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> CIPHER_SIZE <span class="number">10000</span></span></span><br><span class="line"><span class="keyword">char</span> cipher[CIPHER_SIZE];</span><br><span class="line"><span class="keyword">char</span> plain[CIPHER_SIZE];</span><br><span class="line"><span class="keyword">char</span> DE_plain[CIPHER_SIZE];</span><br><span class="line"><span class="keyword">int</span> key;</span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> stastic_frequence[<span class="number">26</span>]=&#123;<span class="number">8.2</span>,<span class="number">1.5</span>,<span class="number">2.8</span>,<span class="number">4.2</span>,<span class="number">12.7</span>,<span class="number">2.2</span>,<span class="number">2.0</span>,<span class="number">6.1</span>,<span class="number">7.0</span>,<span class="number">0.1</span>,<span class="number">0.8</span>,<span class="number">4.0</span>,<span class="number">2.4</span>,<span class="number">6.7</span>,<span class="number">7.5</span>,<span class="number">1.9</span>,<span class="number">0.1</span>,<span class="number">6.0</span>,<span class="number">6.3</span>,<span class="number">9.0</span>,<span class="number">2.8</span>,<span class="number">1.0</span>,<span class="number">2.4</span>,<span class="number">2.0</span>,<span class="number">0.1</span>,<span class="number">0.1</span>&#125;;</span><br><span class="line"><span class="keyword">double</span> cipher_frequence[<span class="number">26</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">stastic_cipher</span><span class="params">(<span class="keyword">char</span> *cipher_S)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> number[<span class="number">26</span>];</span><br><span class="line">    <span class="built_in">memset</span>(cipher_frequence,<span class="number">0</span>,<span class="keyword">sizeof</span>(cipher_frequence));</span><br><span class="line">    <span class="built_in">memset</span>(number,<span class="number">0</span>,<span class="keyword">sizeof</span>(number));</span><br><span class="line">    <span class="keyword">int</span> len=<span class="built_in">strlen</span>(cipher_S);</span><br><span class="line">    <span class="keyword">int</span> sum_len=len;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">char</span> c=cipher_S[i];</span><br><span class="line">        <span class="keyword">if</span>(!((c&lt;=<span class="string">'Z'</span>&amp;&amp;c&gt;=<span class="string">'A'</span>)||(c&lt;=<span class="string">'z'</span>&amp;&amp;c&gt;=<span class="string">'a'</span>)))</span><br><span class="line">        &#123;</span><br><span class="line">            sum_len--;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        number[<span class="built_in">toupper</span>(cipher_S[i])-<span class="string">'A'</span>]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cipher_frequence[i]=number[i]/(<span class="keyword">double</span>)sum_len;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Gen</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(!key)</span><br><span class="line">    &#123;</span><br><span class="line">        srand(time(<span class="number">0</span>));</span><br><span class="line">        key=rand()%<span class="number">25</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Enc</span><span class="params">(<span class="keyword">int</span> k)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len=<span class="built_in">strlen</span>(plain);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">char</span> c=plain[i];</span><br><span class="line">        <span class="keyword">if</span>(!((c&lt;=<span class="string">'Z'</span>&amp;&amp;c&gt;=<span class="string">'A'</span>)||(c&lt;=<span class="string">'z'</span>&amp;&amp;c&gt;=<span class="string">'a'</span>)))</span><br><span class="line">        &#123;</span><br><span class="line">            cipher[i]=c;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(c&lt;=<span class="string">'Z'</span>&amp;&amp;c&gt;=<span class="string">'A'</span>)</span><br><span class="line">                cipher[i]=(plain[i]-<span class="string">'A'</span>+(k))%<span class="number">26</span>+<span class="string">'A'</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                cipher[i]=(plain[i]-<span class="string">'a'</span>+(k))%<span class="number">26</span>+<span class="string">'a'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Dec</span><span class="params">(<span class="keyword">int</span> k)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len=<span class="built_in">strlen</span>(cipher);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">char</span> c=cipher[i];</span><br><span class="line">        <span class="keyword">if</span>(!((c&lt;=<span class="string">'Z'</span>&amp;&amp;c&gt;=<span class="string">'A'</span>)||(c&lt;=<span class="string">'z'</span>&amp;&amp;c&gt;=<span class="string">'a'</span>)))</span><br><span class="line">        &#123;</span><br><span class="line">            DE_plain[i]=c;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(c&lt;=<span class="string">'Z'</span>&amp;&amp;c&gt;=<span class="string">'A'</span>)</span><br><span class="line">                DE_plain[i]=(cipher[i]-<span class="string">'A'</span>+<span class="number">26</span>-(k))%<span class="number">26</span>+<span class="string">'A'</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                DE_plain[i]=(cipher[i]-<span class="string">'a'</span>+<span class="number">26</span>-(k))%<span class="number">26</span>+<span class="string">'a'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Attack</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    stastic_cipher(cipher);</span><br><span class="line">    <span class="keyword">int</span> ret=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">double</span> de=<span class="number">666666</span>;</span><br><span class="line">    <span class="keyword">double</span> stand=<span class="number">0.065</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">26</span>;j++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">double</span> temp=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">double</span> p=stastic_frequence[i]/<span class="number">100</span>;</span><br><span class="line">            <span class="keyword">double</span> q=cipher_frequence[(i+j)%<span class="number">26</span>];</span><br><span class="line">            temp+=p*q;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"move "</span>&lt;&lt;j&lt;&lt;<span class="string">" frequence ^2sum is "</span>&lt;&lt;temp&lt;&lt;endl;</span><br><span class="line">        temp=<span class="built_in">fabs</span>(temp-stand);</span><br><span class="line">        <span class="keyword">if</span>(temp&lt;de)</span><br><span class="line">        &#123;</span><br><span class="line">            de=temp;</span><br><span class="line">            ret=j;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">FILE *fin = fopen(<span class="string">"Caesar_plain.txt"</span>,<span class="string">"r"</span>);</span><br><span class="line"><span class="comment">//FILE *fout = freopen("Caesar_output.txt","w",stdout);</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> temp[<span class="number">1000</span>];</span><br><span class="line">    <span class="built_in">memset</span>(temp,<span class="number">0</span>,<span class="keyword">sizeof</span>(temp));</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">fscanf</span>(fin,<span class="string">"%s"</span>,temp)!=EOF)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">strcat</span>(plain,temp);</span><br><span class="line">        <span class="built_in">memset</span>(temp,<span class="number">0</span>,<span class="keyword">sizeof</span>(temp));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    stastic_cipher(plain);</span><br><span class="line">    <span class="keyword">double</span> sum=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line"><span class="comment">//        cout&lt;&lt;i&lt;&lt;"--------"&lt;&lt;cipher_frequence[i]&lt;&lt;endl;</span></span><br><span class="line">        sum+=cipher_frequence[i]*cipher_frequence[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;sum&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    Gen();</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"key is "</span>&lt;&lt;key&lt;&lt;endl;</span><br><span class="line">    Enc(key);</span><br><span class="line"></span><br><span class="line"><span class="comment">//    sum=0;</span></span><br><span class="line"><span class="comment">//    stastic_cipher(cipher);</span></span><br><span class="line"><span class="comment">//    for(int i=0;i&lt;26;i++)</span></span><br><span class="line"><span class="comment">//       cout&lt;&lt;i&lt;&lt;"--------"&lt;&lt;cipher_frequence[i]&lt;&lt;endl;</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"After Encrypt"</span>&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;cipher&lt;&lt;endl;</span><br><span class="line">    Dec(key);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"After Decrypt"</span>&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;DE_plain&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">int</span> attach_key=Attack();</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"attach key is "</span>&lt;&lt;attach_key&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2、Substitution">2、Substitution</h2><pre><code>移位密码的变形
+映射每个明文字符到不同的密文字符
+</code></pre><h2 id="2-1、Gen">2.1、Gen</h2><pre><code>自定义映射表，例如
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a b c d e f g h i j k l m n o p q r s t u v w x y z</span><br><span class="line">Z E U A D N B K V M R O C Q F S Y H W G L Z I J P T</span><br></pre></td></tr></table></figure>
+<h3 id="2-2、Enc">2.2、Enc</h3><pre><code>明文Mi， 密钥Ki， 得到密文Ci=[<span class="comment">(Mi+Ki)</span><span class="preprocessor">%</span><span class="number">26</span>];
+明文的消息空间只包括英语字母表中的字符
+</code></pre><h3 id="2-3、Dec">2.3、Dec</h3><pre><code>密文Ci， 密钥Ki， 解得明文Mi=[(Ci-Ki+<span class="number">26</span>)%<span class="number">26</span>];
+</code></pre><h3 id="2-4、Attack">2.4、Attack</h3><pre><code>直接统计字母表频率+对英语单词的组成可以进行推测
+</code></pre><h3 id="2-5、Task">2.5、Task</h3><pre><code>        对课后习题的密码破译
+JGRMQOYGHMVBJWRWQFPWEGFFDQGFPFRKBEEBJIZQQ0<span class="built_in">CIBZKLFAFGQVFZF</span>
+WWEOGWOPFGFHWOLPHLRLOLFDMFGQWBLWBWQ0LKFWBYLBLYLFSFTJGRMQB
+OLWJVFFPFWQVHQWFFPQOQVFPQO<span class="built_in">CFPOGFWFJIGFQVHLHLROQVFGWJVFPFO</span>
+LFHGQVQVFILEOGQILHQFQGIQVVOSFAFGBWQVHQWIJVMJVFPFWHGFIWH22
+RAGBABHZQO<span class="built_in">CGFHX</span>
+
+        统计频率得
+</code></pre><p><img src="Substitute.png" alt="static"></p>
+<pre><code>        进一步分析可得
+cryptographic systems freextremey difficult t0 build.
+Nevertheless <span class="keyword">for</span> <span class="keyword">some</span> reason many nonexperts insist <span class="number">0</span>n 
+designing new cryption scheemes <span class="keyword">that</span> seem <span class="keyword">to</span> them <span class="keyword">to</span> be 
+more secure than any other scheme <span class="function_start"><span class="keyword">on</span></span> earth. The 
+unfortunate truth, however <span class="keyword">is</span> <span class="keyword">that</span> such pchemesareusa22yvrivial
+<span class="keyword">to</span> break
+
+        翻译过来应该是说（我翻译很渣。。。。）
+        密码学体系是很难去建立的。然而还是由于一些原因，一些非专业人员
+坚持自己设计新的加密方案，这乍看起来比地球上其他方案安全，然而不幸
+的事实是&amp;^%$*&amp;*(这句话没翻译出来)可以轻松去破解
+
+        好吧，安利一个破解密码的网站
+</code></pre><p><a href="www.qiupquip.com">www.quipquip.com</a></p>
+<h2 id="3、Vigenere">3、Vigenere</h2><pre><code>        为了将密文中字符的概率“均匀平滑化”，可通过将相同的明文字符映射到
+不同的密文字符。 Vigenere加密通过依次运用多个移位加密。也就是说，一个
+ 短的密码字被选作密钥，明文加密是通过每个明文字符“加”每个密钥的字符，
+ 必要时候折回。
+         例如
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">明文： tellhimaboutme</span><br><span class="line">密钥： cafecafecafeca</span><br><span class="line">密文： WFRQKJSFEPAYPF</span><br></pre></td></tr></table></figure>
+<h3 id="3-1、Gen">3.1、Gen</h3><pre><code>将短密钥重复扩展至与明文相同长度，或者不作处理
+</code></pre><h3 id="3-2、Enc">3.2、Enc</h3><pre><code>设原始密钥长度为<span class="built_in">len</span>
+明文Mi， 密钥Ki， 得到密文Ci=[(Mi+K(i%<span class="built_in">len</span>))%<span class="number">26</span>];
+明文的消息空间只包括英语字母表中的字符
+</code></pre><h3 id="3-3、Dec">3.3、Dec</h3><pre><code>密文Ci， 密钥Ki， 解得明文Mi=[<span class="comment">(Ci-K(i%len)</span><span class="number">+26</span>)<span class="preprocessor">%</span><span class="number">26</span>];
+</code></pre><h3 id="3-4、Work_out">3.4、Work out</h3><pre><code>        对如下一段话加密，密钥选取为zjwzcn
+        The company economic benets were limited much when <span class="operator">the</span> company organizations
+were lengthy <span class="operator">and</span> jumbled <span class="operator">in</span> <span class="operator">the</span> past.And <span class="operator">the</span> appearance <span class="operator">of</span> Human resource (HR) <span class="keyword">as</span> <span class="operator">a</span> 
+newly developing discipline marked <span class="operator">the</span> arrival <span class="operator">of</span> Knowledge Managementera. Human Capital
+concept is <span class="built_in">put</span> forward <span class="built_in">to</span> emphasize <span class="operator">the</span> importance <span class="operator">of</span> human resource management <span class="operator">within</span> <span class="operator">the</span> 
+produceperformance. Hence, <span class="keyword">as</span> industries move <span class="built_in">from</span> manual <span class="built_in">to</span> more managerial professions
+so does <span class="operator">the</span> need <span class="keyword">for</span> more highly skilled graduates.
+        HR specialists are hired <span class="built_in">to</span> help senior leadership improve <span class="operator">the</span> corporate structure,
+provide mature offcers continuing education projects <span class="operator">and</span> foster <span class="operator">an</span> enterprise culture. 
+Especially,leaders intend <span class="built_in">to</span> establish <span class="operator">an</span> <span class="keyword">effective</span> company structure where staff can <span class="built_in">get</span> 
+work training <span class="operator">and</span> remuneration <span class="keyword">as</span> they deserve. Besides, priority promotions are given <span class="built_in">to</span> 
+employees who are more experienced. These talent managements <span class="operator">and</span> team building aspects <span class="operator">of</span> 
+HR management improve <span class="operator">the</span> sense <span class="operator">of</span> belonging <span class="operator">of</span> <span class="keyword">each</span> clerk <span class="operator">and</span> rise <span class="operator">the</span> company outcomes. 
+        Therefore, <span class="keyword">it</span> is necessary <span class="built_in">to</span> build <span class="operator">a</span> Human Capital Network <span class="built_in">to</span> reflect <span class="operator">the</span> dynamic 
+<span class="built_in">process</span> <span class="operator">of</span> HR. Thus, <span class="keyword">it</span> would be much easier <span class="keyword">for</span> senior managers <span class="built_in">to</span> monitor <span class="operator">and</span> control 
+skilled personnels <span class="operator">in</span> order <span class="built_in">to</span> prevent them <span class="built_in">from</span> turning over. Moreover, analyzing <span class="operator">the</span> network 
+enables employers <span class="built_in">to</span> optimize Workforce Management <span class="keyword">for</span> saving money <span class="operator">and</span> contributes <span class="built_in">to</span> <span class="operator">the</span> 
+remake <span class="operator">of</span> companies <span class="operator">in</span> <span class="operator">the</span> <span class="keyword">end</span>.
+</code></pre><p><img src="Vigenere1.png" alt="Vigenere"><br><img src="Vigenere2.png" alt="Vigenere"></p>
+<h3 id="3-5、Code">3.5、Code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> CIPHER_SIZE <span class="number">10000</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> KEY_SIZE <span class="number">1000</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> TRY_ATTACK_KEY_LEN <span class="number">10</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> alphabet</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">char</span> id;</span><br><span class="line">    <span class="keyword">double</span> frequence;</span><br><span class="line">    <span class="keyword">char</span> plain;</span><br><span class="line">&#125;stand[<span class="number">26</span>],cipher_alphabet[<span class="number">26</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> stastic_frequence[<span class="number">26</span>]=&#123;<span class="number">8.2</span>,<span class="number">1.5</span>,<span class="number">2.8</span>,<span class="number">4.2</span>,<span class="number">12.7</span>,<span class="number">2.2</span>,<span class="number">2.0</span>,<span class="number">6.1</span>,<span class="number">7.0</span>,<span class="number">0.1</span>,<span class="number">0.8</span>,<span class="number">4.0</span>,<span class="number">2.4</span>,<span class="number">6.7</span>,<span class="number">7.5</span>,<span class="number">1.9</span>,<span class="number">0.1</span>,<span class="number">6.0</span>,<span class="number">6.3</span>,<span class="number">9.0</span>,<span class="number">2.8</span>,<span class="number">1.0</span>,<span class="number">2.4</span>,<span class="number">2.0</span>,<span class="number">0.1</span>,<span class="number">0.1</span>&#125;;</span><br><span class="line"><span class="keyword">double</span> cipher_frequence[<span class="number">26</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//sum+=stastic_frequence[i];</span></span><br><span class="line">        stand[i].id=<span class="string">'A'</span>+i;</span><br><span class="line">        stand[i].frequence=stastic_frequence[i]/<span class="number">100.0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> cipher[CIPHER_SIZE];</span><br><span class="line"><span class="keyword">char</span> plain[CIPHER_SIZE];</span><br><span class="line"><span class="keyword">char</span> key[KEY_SIZE];</span><br><span class="line"><span class="comment">//char EN_key[KEY_SIZE];</span></span><br><span class="line"><span class="keyword">char</span> DE_plain[CIPHER_SIZE];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp_by_frequence</span><span class="params">(alphabet a,alphabet b)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(a.frequence==b.frequence)</span><br><span class="line">        <span class="keyword">return</span> a.id&lt;b.id;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> a.frequence&gt;b.frequence;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp_by_id</span><span class="params">(alphabet a,alphabet b)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a.id&lt;b.id;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">stastic_cipher</span><span class="params">(<span class="keyword">char</span> *cipherS)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> number[<span class="number">26</span>];</span><br><span class="line">    <span class="built_in">memset</span>(cipher_frequence,<span class="number">0</span>,<span class="keyword">sizeof</span>(cipher_frequence));</span><br><span class="line">    <span class="built_in">memset</span>(number,<span class="number">0</span>,<span class="keyword">sizeof</span>(number));</span><br><span class="line">    <span class="keyword">int</span> len=<span class="built_in">strlen</span>(cipherS);</span><br><span class="line">    <span class="keyword">int</span> sum_len=len;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">char</span> c=cipherS[i];</span><br><span class="line">        <span class="keyword">if</span>(!((c&lt;=<span class="string">'Z'</span>&amp;&amp;c&gt;=<span class="string">'A'</span>)||(c&lt;=<span class="string">'z'</span>&amp;&amp;c&gt;=<span class="string">'a'</span>)))</span><br><span class="line">        &#123;</span><br><span class="line">            sum_len--;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        number[<span class="built_in">toupper</span>(cipherS[i])-<span class="string">'A'</span>]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cipher_frequence[i]=number[i]/(<span class="keyword">double</span>)sum_len;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Gen</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;key;</span><br><span class="line"><span class="comment">//    int len=strlen(plain);</span></span><br><span class="line"><span class="comment">//    int key_len=strlen(key);</span></span><br><span class="line"><span class="comment">//    for(int i=0;i&lt;len;i++)</span></span><br><span class="line"><span class="comment">//    &#123;</span></span><br><span class="line"><span class="comment">//        EN_key[i]=toupper(key[i%key_len]);</span></span><br><span class="line"><span class="comment">//    &#125;</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"we input key is \""</span>&lt;&lt;key&lt;&lt;<span class="string">"\""</span>&lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Enc</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len=<span class="built_in">strlen</span>(plain);</span><br><span class="line">    <span class="keyword">int</span> key_len=<span class="built_in">strlen</span>(key);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">char</span> c=plain[i];</span><br><span class="line">        <span class="keyword">if</span>(!((c&lt;=<span class="string">'Z'</span>&amp;&amp;c&gt;=<span class="string">'A'</span>)||(c&lt;=<span class="string">'z'</span>&amp;&amp;c&gt;=<span class="string">'a'</span>)))</span><br><span class="line">        &#123;</span><br><span class="line">            cipher[i]=c;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">char</span> k=<span class="built_in">toupper</span>(key[i%key_len]);</span><br><span class="line">            <span class="keyword">if</span>(c&lt;=<span class="string">'Z'</span>&amp;&amp;c&gt;=<span class="string">'A'</span>)</span><br><span class="line">                cipher[i]=(plain[i]-<span class="string">'A'</span>+(k-<span class="string">'A'</span>))%<span class="number">26</span>+<span class="string">'A'</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                cipher[i]=(plain[i]-<span class="string">'a'</span>+(k-<span class="string">'A'</span>))%<span class="number">26</span>+<span class="string">'a'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Dec</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len=<span class="built_in">strlen</span>(cipher);</span><br><span class="line">    <span class="keyword">int</span> key_len=<span class="built_in">strlen</span>(key);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">char</span> c=cipher[i];</span><br><span class="line">        <span class="keyword">if</span>(!((c&lt;=<span class="string">'Z'</span>&amp;&amp;c&gt;=<span class="string">'A'</span>)||(c&lt;=<span class="string">'z'</span>&amp;&amp;c&gt;=<span class="string">'a'</span>)))</span><br><span class="line">        &#123;</span><br><span class="line">            DE_plain[i]=c;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">char</span> k=<span class="built_in">toupper</span>(key[i%key_len]);</span><br><span class="line">            <span class="keyword">if</span>(c&lt;=<span class="string">'Z'</span>&amp;&amp;c&gt;=<span class="string">'A'</span>)</span><br><span class="line">                DE_plain[i]=(cipher[i]-<span class="string">'A'</span>-(k-<span class="string">'A'</span>)+<span class="number">26</span>)%<span class="number">26</span>+<span class="string">'A'</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                DE_plain[i]=(cipher[i]-<span class="string">'a'</span>-(k-<span class="string">'A'</span>)+<span class="number">26</span>)%<span class="number">26</span>+<span class="string">'a'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> temp_cipher[CIPHER_SIZE];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Attack_key_len</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len=<span class="built_in">strlen</span>(cipher);</span><br><span class="line">    <span class="keyword">int</span> ret=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">double</span> de=<span class="number">66666</span>;</span><br><span class="line">    <span class="keyword">double</span> stand_sub=<span class="number">0.065</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=TRY_ATTACK_KEY_LEN;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">double</span> temp_de=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> l=<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">memset</span>(temp_cipher,<span class="number">0</span>,<span class="keyword">sizeof</span>(temp_cipher));</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;len;j+=i)</span><br><span class="line">        &#123;</span><br><span class="line">            temp_cipher[l++]=cipher[j];</span><br><span class="line">        &#125;</span><br><span class="line">        stastic_cipher(temp_cipher);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">26</span>;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            temp_de+=(cipher_frequence[j]*cipher_frequence[j]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"length "</span>&lt;&lt;i&lt;&lt;<span class="string">" frequency ^2sum is "</span>&lt;&lt;temp_de&lt;&lt;endl;</span><br><span class="line">        temp_de=<span class="built_in">fabs</span>(temp_de-stand_sub);</span><br><span class="line">        <span class="keyword">if</span>(temp_de&lt;de)</span><br><span class="line">        &#123;</span><br><span class="line">            de=temp_de;</span><br><span class="line">            ret=i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Attack</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> key_len;</span><br><span class="line">    key_len=Attack_key_len();</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"we can attach the key length is "</span>&lt;&lt;key_len&lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">FILE *fin = fopen(<span class="string">"Vigenere_plain.txt"</span>,<span class="string">"r"</span>);</span><br><span class="line"><span class="comment">//FILE *fout = freopen("Vigenere_output.txt","w",stdout);</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> temp[<span class="number">100</span>];</span><br><span class="line">    <span class="built_in">memset</span>(temp,<span class="number">0</span>,<span class="keyword">sizeof</span>(temp));</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">fscanf</span>(fin,<span class="string">"%s"</span>,temp)!=EOF)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">strcat</span>(plain,temp);</span><br><span class="line">        <span class="built_in">memset</span>(temp,<span class="number">0</span>,<span class="keyword">sizeof</span>(temp));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    stastic_cipher(plain);</span><br><span class="line">    <span class="keyword">double</span> sum=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)</span><br><span class="line">        sum+=cipher_frequence[i]*cipher_frequence[i];</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;sum&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    Gen();</span><br><span class="line">    Enc();</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"after Encrypt, each alphabet's frequency is smooth"</span>&lt;&lt;endl;</span><br><span class="line">    stastic_cipher(cipher);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)</span><br><span class="line">       <span class="built_in">cout</span>&lt;&lt;i&lt;&lt;<span class="string">"--------"</span>&lt;&lt;cipher_frequence[i]&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    Dec();</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"After Encrypt"</span>&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;cipher&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"After Decrypt"</span>&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;DE_plain&lt;&lt;endl;</span><br><span class="line">    Attack();</span><br><span class="line">    <span class="comment">//cout&lt;&lt;sum&lt;&lt;endl;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4、Others">4、Others</h2><h3 id="4-1、Kerckhoffs_Principle">4.1、Kerckhoffs Principle</h3><pre><code>        加密方法不必保存，他可以被敌人轻易获得。换言之：
+加密方案本身不必保密，唯一需要保密的是通信双方共享的秘密密钥
+        Kerckhoffs 的意图是加密方案应该设计成只要敌手不知道使用的
+密钥，即使知道方案的组成的算法细节，方案依然是安全的。换句话说，
+Kerckhoffs 原则要求安全性仅依赖于密钥的安全性。
+</code></pre><h3 id="4-2、Modern_Cryptography_Basic_Principle">4.2、Modern Cryptography Basic Principle</h3><pre><code>原则一： 形成精确的定义
+原则二： 精确假设的依赖
+原则三： 严格的安全证明
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zjwzcn7.github.io/2016/02/14/classical-crypto/" data-id="cikmekwxy000brkdgn8mqa32c" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cryptography/">Cryptography</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="[layout]-classical-crypto" data-title="《现代密码学--原理与协议》学习笔记———经典密码学" data-url="undefined"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zjwzcn07"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+
+  
+    <article id="[layout]-packrec" class="article article-type-[layout]" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/11/packrec/" class="article-date">
+  <time datetime="2016-02-11T13:09:01.000Z" itemprop="datePublished">2016-02-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/11/packrec/">packrec</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zjwzcn7.github.io/2016/02/11/packrec/" data-id="cikmekwx80004rkdgxogvvm7s" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+<!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="[layout]-packrec" data-title="packrec" data-url="undefined"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zjwzcn07"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+
+  
+    <article id="[layout]-calfflac" class="article article-type-[layout]" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/11/calfflac/" class="article-date">
+  <time datetime="2016-02-11T13:08:03.000Z" itemprop="datePublished">2016-02-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/11/calfflac/">calfflac</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zjwzcn7.github.io/2016/02/11/calfflac/" data-id="cikmekwy0000erkdgy1ozw0kk" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+<!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="[layout]-calfflac" data-title="calfflac" data-url="undefined"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zjwzcn07"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+
+  
     <article id="[layout]-A-Rectangular-Barn" class="article article-type-[layout]" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/02/10/A-Rectangular-Barn/" class="article-date">
@@ -113,7 +359,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2016/02/10/A-Rectangular-Barn/" data-id="cikgixcuq001qewdggcqelwk7" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2016/02/10/A-Rectangular-Barn/" data-id="cikmekwzy001urkdg2m7vt5k2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
@@ -179,7 +425,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2016/02/07/hidden/" data-id="cikgixcs70004ewdgo5hqf4kn" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2016/02/07/hidden/" data-id="cikmekwxs0005rkdg3urnqak5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
@@ -191,61 +437,6 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
 
 <!-- 多说评论框 start -->
   <div class="ds-thread" data-thread-key="[layout]-hidden" data-title="USACO-5.5-hidden" data-url="undefined"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"zjwzcn07"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-  </script>
-<!-- 多说公共JS代码 end -->
-
-
-  
-    <article id="[layout]-classical-crypto" class="article article-type-[layout]" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/02/07/classical-crypto/" class="article-date">
-  <time datetime="2016-02-07T09:09:22.000Z" itemprop="datePublished">2016-02-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/07/classical-crypto/">Classical Encrypt</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2016/02/07/classical-crypto/" data-id="cikgixcsd000aewdgtos5zn72" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cypto/">cypto</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="[layout]-classical-crypto" data-title="Classical Encrypt" data-url="undefined"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -297,7 +488,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2016/01/22/sublime-LaTex/" data-id="cikgixcir0001ewdgu2md95ps" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2016/01/22/sublime-LaTex/" data-id="cikmekwo90001rkdg16utd5qc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LaTeX/">LaTeX</a></li></ul>
@@ -357,7 +548,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2016/01/02/Big-Barn/" data-id="cikgixcuk001mewdgjdok7rvt" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2016/01/02/Big-Barn/" data-id="cikmekwzs001qrkdg0ddx0860" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
@@ -426,7 +617,7 @@ a<span class="label">ns2</span>=max<span class="comment">(ans1,ans2)</span>。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2016/01/02/Network-of-School/" data-id="cikgixctx0012ewdg95gecd3m" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2016/01/02/Network-of-School/" data-id="cikmekwyy0016rkdg3ilf6371" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
@@ -490,7 +681,7 @@ Output percentage visible: <span class="function"><span class="title">s</span><s
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2016/01/02/Window-Area/" data-id="cikgixcsh000eewdgc5f6ap7b" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2016/01/02/Window-Area/" data-id="cikmekwy5000irkdgscpbydud" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
@@ -552,7 +743,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/12/31/hello2016/" data-id="cikgixcsa0007ewdgsp4l4u35" class="article-share-link">Share</a>
+      <a data-url="http://zjwzcn7.github.io/2015/12/31/hello2016/" data-id="cikmekwxv0008rkdgjjm1qvxi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Life/">Life</a></li></ul>
@@ -564,225 +755,6 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
 
 <!-- 多说评论框 start -->
   <div class="ds-thread" data-thread-key="[layout]-hello2016" data-title="Aim at 2016" data-url="undefined"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"zjwzcn07"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-  </script>
-<!-- 多说公共JS代码 end -->
-
-
-  
-    <article id="[layout]-XDU-maybe" class="article article-type-[layout]" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/12/25/XDU-maybe/" class="article-date">
-  <time datetime="2015-12-25T10:49:11.000Z" itemprop="datePublished">2015-12-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/25/XDU-maybe/">ACM大赛XDU_maybe队：没有硝烟的战场有一群ACMer在奋斗着.(转自西电e流论坛)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="原文">原文</h2><pre><code>不知不觉屏幕上的倒计时定格在<span class="number">0</span>:<span class="number">00</span>:<span class="number">00</span>，第<span class="number">34</span>届ACM/ICPC全球总决赛至此缓缓落下帷幕。
-经过五小时的苦战、略显疲惫的我们站在赛场上，看着来自世界<span class="number">33</span>个国家和地区的一百多支
-队伍，三个人心里滋味百般——是为前期的状态低迷感到遗憾，还是为最后一小时的逆转感到
-欣慰？是为能跟来自全球的优秀选手同台竞技感到荣幸，还是为在比赛中看到跟他们的差距
-感到压力……全球第<span class="number">36</span>名，我们XDU_maybe队交出了一份令人满意的答卷，这也是对我们一年
-半来的付出和汗水最好的肯定。回首参加竞赛的这段日子，思绪便像总决赛场外的大雪一样
-纷飞着。
-</code></pre><p>初识</p>
-<pre><code>国际大学生程序设计竞赛(简称ACM-ICPC）以团队的形式代表各学校参赛，每队由<span class="number">3</span>名队员
-组成。每位队员必须是在校学生，有一定的年龄限制，并且最多可以参加<span class="number">2</span>次全球总决赛和每年
-<span class="number">2</span>次区域赛。
-
-
-比赛期间，每队使用<span class="number">1</span>台电脑需要在<span class="number">5</span>个小时内使用C、C++、Pascal或Java中的一种编写程序解
-决<span class="number">7</span>到<span class="number">10</span>个问题。程序完成之后提交裁判运行，运行的结果会判定为正确或错误两种并及时通知
-参赛队。而且有趣的是每队在正确完成一题后，组织者将在其位置上升起一只代表该题颜色的气球。
-
-
-初次听说ACM/ICPC这项竞赛是在刚入学的时候，作为计算机专业学生的我们被这有着“程序设计
-奥林匹克”之美称的竞赛深深吸引住了——公正，而且富有挑战性，对个人的专业素养提高有着很
-大帮助。由于有着相同的信仰，来自不同省份不同班级的三个人最终走到了一起并成为了队友。
-
-
-对于很多刚上大学的学生来说，程序设计及算法的基础可以说是零，当然我们也不例外，连基本
-的输入输出都不大会，更别提什么深搜，广搜等基本算法了。相比之下，清华北大等名牌大学由
-于高中信息学竞赛保送生居多，他们可以轻而易举地拿到金牌，而西电的ACM竞赛基本从大二开
-始参加，一般到大三大四才能取得成绩。初看之下可能会吓走不少想尝试ACM的人，确实，在起
-跑线上就已经处于劣势的比赛，有几个想参加呢？我们权衡再三，还是选择了ACM，不仅仅只是
-因为喜欢和为了提高专业素质——如前文所说，这是一项富有挑战性的比赛，没有令人畏足不前的
-困难，哪来真正的成长？为此我们从零开始，一点一点地学习C\C++，自学了数据结构和算法，
-用挑战充实着每一天。
-
-
-大一暑假，我们迎来了实力第一次飙升的阶段，学校组织了ACM暑期培训，由于参训人数很多，
-每天早晨都要起早去机房占机位，培训以半天讲座半天联系中间穿插比赛的形式进行。初期讲的
-比较简单，以我们当时自学的只是还可以跟上，每天做几道题。到后来讲动态规划等高级算法的
-时候就比较迷茫，听不大懂。那个时候恰恰是最艰难的时候。于是我们加紧了学习的步伐，进行
-高强度的训练，经常凌晨两点多睡，五点多起床，虽然很辛苦，但也乐在其中，虽然三个人都
-曾经有过放弃的念头，但看着可爱的战友们依然奋战，又怎能退却，我们在为梦想奋斗！就这
-样，我们相互支持，相互帮助，顺利完成暑假的算法入门学习。暑假一个月下来，人整个瘦了一
-圈，但是我们收获了很多。ACM，我们迈出了坚实的第一步。
-</code></pre><p>杭州失利</p>
-<pre><code>在西电ACM校赛之后，我们正式进入实验室开始了对算法的进一步学习，在实验室里有学长的帮助，
-队友的交流，我们进步也很快。很幸运，我们队作为新人，获得了参加<span class="number">2008</span>年杭州赛区现场赛的机
-会。从这时起，我们三人正式建队，起名叫maybe，寓意就是：一切皆有可能，希望我们能成为一
-匹黑马创造奇迹。从教练的角度来说我们队出来比赛最大的目标也就是见见世面，感受现场赛气氛，
-为明年比赛培养后备人才，因此也没多大压力。不过在我们看来，现场赛前<span class="number">60</span>%的队伍可以获得铜奖，
-认为铜奖应该还是挺好拿的，就定下了个目标，铜奖。
-
-
-事实证明，我们过于高估了自己的实力，在这场比赛的最后一个小时，我们才磕磕绊绊AC了一道题，
-可以说是彻底的失败。杭州失利，作为处子秀，我们第一次体验现场赛的氛围，感受选手们的头脑风
-暴中激烈拼杀，不敢说在这个赛区学到了什么知识，但就在这赛区我们看到了差距、奋斗的目标及潜
-在的荣誉，追逐跟超越是件有意思的事，我们都决定再参加一年。
-</code></pre><p>寒江独钓</p>
-<pre><code>杭州赛区回来后，接下来的半年多可以说是没什么现场赛可以参加。在学期剩下的时间和那个寒假，
-我们在各个OnlineJudge上切题，并参加网上的比赛，比如各大OJ月赛、百度之星、腾讯TIC、topcoder
-等，借助比赛来提高代码速度、增强思维敏捷性及适应比赛气氛。在这个漫长的时期里，除了知识、结识
-ACMer和比赛排名微微的上升，我们一无所获。没有荣誉没有奖金，没有人为你鼓掌加油，甚至没有人知
-道你的存在。这也是ACM让很多人望而却步的原因之一，但我们却在其中流连忘返。
-
-
-又到了一年一度亚洲区网络预选赛的时候，这其中发挥最差的莫过于合肥赛区，差点连现场赛的名额都
-保不住，所幸接下来几场网络赛表现都比较中规中矩，在平稳发挥中我们取得了所有赛区的入场券，不
-过在现场赛区的选择时阴差阳错，我们选择了合肥和上海，这两个网赛发挥最差的赛区。
-</code></pre><p>合肥夺金</p>
-<pre><code>经过一年多的磨练，我们信心满满地开始了现场赛的征程。牢记第一次惨败的教训，凭借刻苦的学习和
-一年多默契的配合，此战非常顺利，四次提交全部一次通过，凭借罚时的优势获得金牌，在颁奖典礼
-上，听到主持人宣布西安电子科技大学获得金牌的时候，我们三个抱成一团，欢呼雀跃，这一切来的太
-不容易，要知道，这是西电ACM/ICPC历史上第一枚金牌。
-
-
-接下来的上海赛区，由于队里的主敲状态很差，我们的发挥有点失准，但也还好保住了银牌。就这样，
-<span class="number">09</span>年度，XDU_maybe为西电获得了一金一银的成绩。
-</code></pre><p>2010全球总决赛</p>
-<pre><code>本以为今年的比赛就这样结束的时候，我们意外地收到了教练发来的邮件，通知我们晋级<span class="number">2010</span>年哈尔滨举
-行的ACM/ICPC全球总决赛！阔别三年，西电再一次踏上了世界总决赛的舞台，而我们也欣喜若狂，第一次
-站在如此高度上，近距离地触摸着我们的梦想。
-
-
-正式比赛的前四小时发挥的很差，只过了两个题，然而封榜后的那一小时是让我们感到惊喜的一小时，五
-分钟之内连续提交通过两题，并最终以四题的成绩结束了比赛。王院长和张老师赛后从看台下来找我们，当
-我们说封榜后过了两个题让他们舒了一口气，算是一个比较满意的结果，全球第<span class="number">36</span>名刷新了西电在<span class="number">07</span>年东
-京总决赛第<span class="number">44</span>名的成绩，也让我们如愿地成为了一匹黑马。
-</code></pre><p>感谢</p>
-<pre><code>我们竞赛取得的任何成绩都离不开学校的支持及老师和教练的操劳。备战期为我们指导，赛前为我们报名做
-筹备工作，比赛时在外地对我们生活精心的照顾。老师，你们辛苦了。
-
-
-感谢实验室的战友们，大家一起营造了良好的实验室的学习氛围，互相讨论，互相学习，互相竞争，互相
-帮助。大家一起为西电ACM取得好的成绩而努力。
-
-
-感谢所有帮助过我们的同学们，谢谢你们。
-
-
-没有硝烟的战场，五个小时的战役，有一群ACMer在奋斗着，不会停止追梦的步伐。
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/12/25/XDU-maybe/" data-id="cikgixcse000bewdgy9g1szvx" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ACM/">ACM</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="[layout]-XDU-maybe" data-title="ACM大赛XDU_maybe队：没有硝烟的战场有一群ACMer在奋斗着.(转自西电e流论坛)" data-url="undefined"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"zjwzcn07"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-  </script>
-<!-- 多说公共JS代码 end -->
-
-
-  
-    <article id="[layout]-Musical-Themes" class="article article-type-[layout]" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/12/25/Musical-Themes/" class="article-date">
-  <time datetime="2015-12-25T10:04:52.000Z" itemprop="datePublished">2015-12-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/25/Musical-Themes/">USACO-5.1-Musical Themes</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>果然USACO是个学习知识点的好地方。。。恨自己接触太晚，:-(</p>
-<h2 id="题意"><a href="http://train.usaco.org/usacoprob2?a=5HVtFfbSzfe&amp;S=theme" target="_blank" rel="external">题意</a></h2><pre><code>给一串数字数组，让你找出相同主题的最长串的长度。
-相同主题是指连续子串波动情况相同但不可以重叠。
-例如<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">4</span>，最长的相同主题的子串是<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">3</span>和<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">4</span>，长度为<span class="number">4</span>
-</code></pre><h2 id="思路">思路</h2><pre><code>可以转化为前后数字相减后求最长重复子串。如上例的可以转化为
-<span class="number">2</span>,<span class="number">2</span>,-<span class="number">4</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">2</span>,-<span class="number">4</span>
-重复出现的最长子串是<span class="number">2</span> <span class="number">2</span> -<span class="number">4</span>，长度是<span class="number">3</span>，加一即可。
-求不重叠最长重复子串，可以使用后缀数组nlogn求解
-</code></pre><p><a href="http://wenku.baidu.com/link?url=p73AKrQVdccwAUc0qEML7Hqzoniu9tj7F6x4K1LvUjRgTZBGf2edDHZ7x0oooWuTEewd7v3sd1atg8T5Eu7Z5oyEEjMQ6PXUPSspfhVaWR7" target="_blank" rel="external">国家集训队2009论文《后缀数组——处理字符串的有力工具》 罗穗骞</a><br>     先求得后缀数组sa，sa[i]储存的是排第i大的后缀的开头位置<br>     再求得名次数组rank，保存的是suffix(i)｛后缀｝在所有后缀中从小到大排列的名次<br>     关键求得的是最长公共前缀height数组，定义height[i]=suffix(sa[i-1]) 和<br>      suffix(sa[i])的最长公共前缀，也就是排名相邻的两个后缀的最长公共前缀<br>      (据说很有用！！！,现在接触太少，以后做题慢慢积累）。<br>      计算height较好的方法是O(n)，详见下方get_height代码。<br>     同样这道题需要用height来算。</p>
-<pre><code>二分长度k，以k为分组依据，把排序后的后缀分成若干组，其中每组的后缀之间的
-<span class="variable">height</span>值都不小于k。对于每组后缀，只须判断每个后缀的sa值的最大值和最小值之差
-是否不小于k。如果有一组满足，则说明存在，否则不存在。
-</code></pre><h2 id="代码">代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/*</span><br><span class="line">ID: youqihe1</span><br><span class="line">PROG: theme</span><br><span class="line">LANG: C++</span><br><span class="line">*/</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">FILE *fin  = freopen (<span class="string">"theme.in"</span>, <span class="string">"r"</span>,<span class="built_in">stdin</span>);</span><br><span class="line">FILE *fout = freopen (<span class="string">"theme.out"</span>, <span class="string">"w"</span>,<span class="built_in">stdout</span>);</span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> MAXSIZE <span class="number">5005</span></span></span><br><span class="line"><span class="keyword">struct</span> node</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//    int suffix[5005];</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;suffix;</span><br><span class="line">    <span class="keyword">int</span> id;</span><br><span class="line">    <span class="keyword">int</span> len;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">vector</span>&lt;node&gt;sa;</span><br><span class="line"><span class="keyword">int</span> num_sa;</span><br><span class="line"><span class="keyword">int</span> ranklist[MAXSIZE];</span><br><span class="line"><span class="keyword">int</span> height[MAXSIZE];</span><br><span class="line"><span class="keyword">int</span> S[<span class="number">5005</span>];</span><br><span class="line"><span class="keyword">int</span> N,M;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(node a,node b)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(;i&lt;a.len&amp;&amp;i&lt;b.len;i++)</span><br><span class="line">        <span class="keyword">if</span>(a.suffix[i]&gt;b.suffix[i])</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(a.suffix[i]&lt;b.suffix[i])</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span> ;</span><br><span class="line">    <span class="keyword">if</span>(a.len&lt;b.len) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(a.len==b.len) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">cls_temp</span><span class="params">(node temp)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(!temp.suffix.empty()) temp.suffix.pop_back();</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">process_suffix</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len=M;</span><br><span class="line">    node temp;</span><br><span class="line">    cls_temp(temp);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;M;i++)</span><br><span class="line">        temp.suffix.push_back(S[i]);</span><br><span class="line">    temp.id=<span class="number">0</span>;</span><br><span class="line">    temp.len=M;</span><br><span class="line">    sa.push_back(temp);</span><br><span class="line">    num_sa++;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len-<span class="number">1</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        node temp;</span><br><span class="line">        cls_temp(temp);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;M-i;j++)</span><br><span class="line">        temp.suffix.push_back(sa[num_sa-<span class="number">1</span>].suffix[j+<span class="number">1</span>]);</span><br><span class="line">        temp.len=M-i-<span class="number">1</span>;</span><br><span class="line">        temp.id=i+<span class="number">1</span>;</span><br><span class="line">        sa.push_back(temp);</span><br><span class="line">        num_sa++;</span><br><span class="line">    &#125;</span><br><span class="line">    sort(sa.begin(),sa.end(),cmp);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;num_sa;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> id=sa[i].id;</span><br><span class="line">        ranklist[id]=i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">get_height</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> l=M;</span><br><span class="line">    <span class="keyword">int</span> k=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;l;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(ranklist[i]==<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            height[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">            k=<span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(k&gt;<span class="number">0</span>)k--;</span><br><span class="line">            <span class="keyword">int</span> j=sa[ranklist[i]-<span class="number">1</span>].id;</span><br><span class="line">            <span class="keyword">while</span>(S[i+k]==S[j+k])k++;</span><br><span class="line">            height[ranklist[i]]=k;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> A[<span class="number">25</span>];</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">(<span class="keyword">int</span> k)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> minn=sa[<span class="number">0</span>].id,maxx=sa[<span class="number">0</span>].id;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;M;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(height[i]&gt;=k)</span><br><span class="line">        &#123;</span><br><span class="line">            minn=min(minn,sa[i].id);</span><br><span class="line">            maxx=max(maxx,sa[i].id);</span><br><span class="line">            <span class="keyword">if</span>(maxx-minn&gt;=k)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> maxx=minn=sa[i].id;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;N;i++)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;A[i]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>,j=<span class="number">0</span>;i&lt;N;i++,j++)</span><br><span class="line">        S[j]=A[i]-A[i-<span class="number">1</span>];</span><br><span class="line">    M=N-<span class="number">1</span>;</span><br><span class="line">    process_suffix();</span><br><span class="line">    get_height();</span><br><span class="line">    <span class="keyword">int</span> s=<span class="number">1</span>,e=M;</span><br><span class="line">    <span class="keyword">while</span>(s&lt;=e)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> mid=mid=(s+e)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(check(mid))s=mid+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> e=mid-<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(e&gt;=<span class="number">4</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,e+<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">"0"</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zjwzcn7.github.io/2015/12/25/Musical-Themes/" data-id="cikgixctz0014ewdg5gd0o7kj" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="[layout]-Musical-Themes" data-title="USACO-5.1-Musical Themes" data-url="undefined"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -815,7 +787,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACM/">ACM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACM——计算几何/">ACM——计算几何</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Codeforce/">Codeforce</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cypto/">Cypto</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LaTeX/">LaTeX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Life/">Life</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Social-Engineering/">Social Engineering</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USACO/">USACO</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cypto/">cypto</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACM/">ACM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACM——计算几何/">ACM——计算几何</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Codeforce/">Codeforce</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cryptography/">Cryptography</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LaTeX/">LaTeX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Life/">Life</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Social-Engineering/">Social Engineering</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USACO/">USACO</a><span class="tag-list-count">19</span></li></ul>
     </div>
   </div>
 
@@ -824,7 +796,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/ACM/" style="font-size: 10px;">ACM</a> <a href="/tags/ACM——计算几何/" style="font-size: 15px;">ACM——计算几何</a> <a href="/tags/Codeforce/" style="font-size: 10px;">Codeforce</a> <a href="/tags/Cypto/" style="font-size: 10px;">Cypto</a> <a href="/tags/LaTeX/" style="font-size: 10px;">LaTeX</a> <a href="/tags/Life/" style="font-size: 10px;">Life</a> <a href="/tags/Social-Engineering/" style="font-size: 10px;">Social Engineering</a> <a href="/tags/USACO/" style="font-size: 20px;">USACO</a> <a href="/tags/cypto/" style="font-size: 10px;">cypto</a>
+      <a href="/tags/ACM/" style="font-size: 10px;">ACM</a> <a href="/tags/ACM——计算几何/" style="font-size: 15px;">ACM——计算几何</a> <a href="/tags/Codeforce/" style="font-size: 10px;">Codeforce</a> <a href="/tags/Cryptography/" style="font-size: 15px;">Cryptography</a> <a href="/tags/LaTeX/" style="font-size: 10px;">LaTeX</a> <a href="/tags/Life/" style="font-size: 10px;">Life</a> <a href="/tags/Social-Engineering/" style="font-size: 10px;">Social Engineering</a> <a href="/tags/USACO/" style="font-size: 20px;">USACO</a>
     </div>
   </div>
 
@@ -833,7 +805,7 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -845,23 +817,23 @@ var duoshuoQuery = {short_name:"zjwzcn07"};
       <ul>
         
           <li>
+            <a href="/2016/02/14/classical-crypto/">《现代密码学--原理与协议》学习笔记———经典密码学</a>
+          </li>
+        
+          <li>
+            <a href="/2016/02/11/packrec/">packrec</a>
+          </li>
+        
+          <li>
+            <a href="/2016/02/11/calfflac/">calfflac</a>
+          </li>
+        
+          <li>
             <a href="/2016/02/10/A-Rectangular-Barn/">USACO-6.1-A RectangularBarn</a>
           </li>
         
           <li>
             <a href="/2016/02/07/hidden/">USACO-5.5-hidden</a>
-          </li>
-        
-          <li>
-            <a href="/2016/02/07/classical-crypto/">Classical Encrypt</a>
-          </li>
-        
-          <li>
-            <a href="/2016/01/22/sublime-LaTex/">sublime+LaTex win配置</a>
-          </li>
-        
-          <li>
-            <a href="/2016/01/02/Big-Barn/">USACO-5.3-Big Barn</a>
           </li>
         
       </ul>

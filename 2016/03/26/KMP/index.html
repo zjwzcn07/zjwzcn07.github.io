@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>KMP &amp;&amp; Extend_KMP | zjwzcn07</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="KMP主要是求next, next[i]是指前i-1个中最长的的前缀和后缀匹配的长度
+12345678910111213141516171819202122232425262728293031void getnext(int M)&amp;#123;	int i = 0, j = -1;	nxt[0] = -1;	while (i&amp;amp;lt;M)	&amp;#123;		if (j == -1 || P[i]">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KMP && Extend_KMP">
+<meta property="og:url" content="http://zjwzcn7.github.io/2016/03/26/KMP/index.html">
+<meta property="og:site_name" content="zjwzcn07">
+<meta property="og:description" content="KMP主要是求next, next[i]是指前i-1个中最长的的前缀和后缀匹配的长度
+12345678910111213141516171819202122232425262728293031void getnext(int M)&amp;#123;	int i = 0, j = -1;	nxt[0] = -1;	while (i&amp;amp;lt;M)	&amp;#123;		if (j == -1 || P[i]">
+<meta property="og:updated_time" content="2016-03-25T16:32:19.743Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="KMP && Extend_KMP">
+<meta name="twitter:description" content="KMP主要是求next, next[i]是指前i-1个中最长的的前缀和后缀匹配的长度
+12345678910111213141516171819202122232425262728293031void getnext(int M)&amp;#123;	int i = 0, j = -1;	nxt[0] = -1;	while (i&amp;amp;lt;M)	&amp;#123;		if (j == -1 || P[i]">
+<meta name="twitter:creator" content="@coolwuxing">
+  
+    <link rel="alternative" href="/atom.xml" title="zjwzcn07" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-43935113-3', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="header">
+  <div id="banner">
+    <div id="cover"></div>
+    <div id="stars"></div>
+  </div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">zjwzcn07</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">丈夫立世，独对八荒</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://zjwzcn7.github.io"></form>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="outer">
+        <section id="main"><article id="[layout]-KMP" class="article article-type-[layout]" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/03/26/KMP/" class="article-date">
+  <time datetime="2016-03-25T16:27:15.000Z" itemprop="datePublished">2016-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      KMP &amp;&amp; Extend_KMP
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="KMP">KMP</h2><p>主要是求next, next[i]是指前i-1个中最长的的前缀和后缀匹配的长度</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getnext</span><span class="params">(<span class="keyword">int</span> M)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>, j = -<span class="number">1</span>;</span><br><span class="line">	nxt[<span class="number">0</span>] = -<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span> (i&amp;lt;M)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (j == -<span class="number">1</span> || P[i] == P[j])</span><br><span class="line">		&#123;</span><br><span class="line">			nxt[++i]=++j;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			j = nxt[j];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">kmp</span><span class="params">(<span class="keyword">int</span> M,<span class="keyword">int</span> N)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">   <span class="keyword">int</span> i=<span class="number">0</span>,j=<span class="number">0</span>;</span><br><span class="line">   <span class="keyword">while</span>(i&amp;lt;N)</span><br><span class="line">   &#123;</span><br><span class="line">       <span class="keyword">if</span>(j==-<span class="number">1</span>||S[i]==P[j])</span><br><span class="line">           i++,j++;</span><br><span class="line">       <span class="keyword">else</span></span><br><span class="line">           j=nxt[j];</span><br><span class="line">       <span class="keyword">if</span>(j==M)&#123;</span><br><span class="line">           sum++;</span><br><span class="line">          <span class="comment">// printf("%d ",i-M+1);</span></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Extend_KMP">Extend_KMP</h2><p>是指extend[i]代表最长的P[i..i+z-1]==S[0…z-1]的z值</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ex_kmp</span><span class="params">(<span class="keyword">char</span> S[],<span class="keyword">char</span> P[])</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,j,p,l;</span><br><span class="line">    <span class="keyword">int</span> lenS=<span class="built_in">strlen</span>(S);</span><br><span class="line">    <span class="keyword">int</span> lenP=<span class="built_in">strlen</span>(P);</span><br><span class="line">    <span class="built_in">memset</span>(extend,<span class="number">0</span>,<span class="keyword">sizeof</span>(extend));</span><br><span class="line">    <span class="built_in">memset</span>(nxt,<span class="number">0</span>,<span class="keyword">sizeof</span>(nxt));</span><br><span class="line"></span><br><span class="line">    nxt[<span class="number">0</span>]=lenP;</span><br><span class="line">    j=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(j+<span class="number">1</span>&amp;lt;lenP&amp;amp;&amp;amp;P[j]==P[j+<span class="number">1</span>])j++;</span><br><span class="line">    nxt[<span class="number">1</span>]=j;</span><br><span class="line">    <span class="keyword">int</span> a=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&amp;lt;lenP;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        p=nxt[a]+a-<span class="number">1</span>;</span><br><span class="line">        l=nxt[i-<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span>(i+l&amp;lt;p+<span class="number">1</span>)</span><br><span class="line">            nxt[i]=l;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            j=max(<span class="number">0</span>,p-i+<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">while</span>(i+j&amp;lt;lenP&amp;amp;&amp;amp;P[i+j]==P[j])j++;</span><br><span class="line">            nxt[i]=j;</span><br><span class="line">            a=i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    j=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(j&amp;lt;lenS&amp;amp;&amp;amp;j&amp;lt;lenP&amp;amp;&amp;amp;S[j]==P[j])j++;</span><br><span class="line">    extend[<span class="number">0</span>]=j;</span><br><span class="line">    a=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&amp;lt;lenS;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        p=extend[a]+a-<span class="number">1</span>;</span><br><span class="line">        l=nxt[i-a];</span><br><span class="line">        <span class="keyword">if</span>(l+i&amp;lt;p+<span class="number">1</span>)</span><br><span class="line">            nxt[i]=l;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            j=max(<span class="number">0</span>,p-i+<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">while</span>(i+j&amp;lt;lenS&amp;amp;&amp;amp;j&amp;lt;lenP&amp;amp;&amp;amp;S[i+j]==P[j])j++;</span><br><span class="line">            extend[i]=j;</span><br><span class="line">            a=i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="题目集">题目集</h2><h3 id="POJ_3461_Oulipo">POJ 3461 Oulipo</h3><p>统计子串出现次数</p>
+<h3 id="HDU_1711_umber_Sequence">HDU 1711 umber Sequence</h3><p>找子串出现的第一次位置</p>
+<h3 id="POJ_1961_Period">POJ 1961 Period</h3><p>查找前缀L中循环出现的子串数，直接在每个前缀L时计算出next数组时，ans=L/(L-next[L])，当且仅当(L-next[L])|L</p>
+<h3 id="POJ_2406_Power_Strings">POJ 2406 Power Strings</h3><p>问该序列最多能是子串的周期几次循环组成。 如同上题，ans=len/(len-next[len])</p>
+<h3 id="HDU_4300_Clairewd’s_message">HDU 4300 Clairewd’s message</h3><p>给你明文到密文的映射表，然后给你一串序列，是由密文+该密文的部分明文组成，让你打印可能的最短完整的明文</p>
+<p>就是先让原串解密映射为Str，对原串进行extend_KMP，然后找到最长的extend[i]，使得从i之后Str匹配最长的原串</p>
+<h3 id="HDU_3336_Count_the_string">HDU 3336 Count the string</h3><p>计算每个前缀在整串中出现的次数总和</p>
+<p>由next的性质可得，每个前缀出现的次数dp[i]=dp[next[i]]+1;</p>
+<h3 id="HDU_3746_Cyclic_Nacklace">HDU 3746 Cyclic Nacklace</h3><p>查找最短循环节,L=len-next[len]</p>
+<h3 id="HDU_2594_Simpsons’_Hidden_Talents">HDU 2594 Simpsons’ Hidden Talents</h3><p>给串s1，s2，找到最长的s1前缀等于s2前缀。</p>
+<p>就是将s2加在s1后面，然后求next[len_sum]即可</p>
+<h3 id="POJ_2185_Milking_Grid">POJ 2185 Milking Grid</h3><p>给一个矩阵的，找到最小的子矩阵，使得大矩阵都可以由小矩阵构成。</p>
+<p>对矩阵的行列做kmp，ans=(N-next1[N])*(M-next2[M]);</p>
+<h3 id="HDU_4763_Theme_Section">HDU 4763 Theme Section</h3><p>给一个串，从中间找一个最长的子串，使得串的前缀后缀也都是该子串，三个子串不可相交</p>
+<p>求出next后，从后往前暴力枚举可行的子串，将该子串与原串-子串进行匹配，看是否存在，即可求出最长子串</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zjwzcn7.github.io/2016/03/26/KMP/" data-id="cim7xf7dc001n6kdgu77j88ck" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ACM-String/">ACM_String</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/03/17/HDOJ-2446/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">HDOJ_2446</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="[layout]-KMP" data-title="KMP &amp;&amp; Extend_KMP" data-url="http://zjwzcn7.github.io/2016/03/26/KMP/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zjwzcn07"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACM/">ACM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACM-String/">ACM_String</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACM——计算几何/">ACM——计算几何</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Codeforce/">Codeforce</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cryptography/">Cryptography</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HDOJ/">HDOJ</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LaTeX/">LaTeX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Life/">Life</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/POJ/">POJ</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Social-Engineering/">Social Engineering</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USACO/">USACO</a><span class="tag-list-count">29</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ACM/" style="font-size: 10px;">ACM</a> <a href="/tags/ACM-String/" style="font-size: 10px;">ACM_String</a> <a href="/tags/ACM——计算几何/" style="font-size: 15px;">ACM——计算几何</a> <a href="/tags/Codeforce/" style="font-size: 10px;">Codeforce</a> <a href="/tags/Cryptography/" style="font-size: 15px;">Cryptography</a> <a href="/tags/HDOJ/" style="font-size: 10px;">HDOJ</a> <a href="/tags/LaTeX/" style="font-size: 10px;">LaTeX</a> <a href="/tags/Life/" style="font-size: 10px;">Life</a> <a href="/tags/POJ/" style="font-size: 10px;">POJ</a> <a href="/tags/Social-Engineering/" style="font-size: 10px;">Social Engineering</a> <a href="/tags/USACO/" style="font-size: 20px;">USACO</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/03/26/KMP/">KMP &amp;&amp; Extend_KMP</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/17/HDOJ-2446/">HDOJ_2446</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/17/POJ-2559/">POJ_2559_Largest Rectangle in a Histogram</a>
+          </li>
+        
+          <li>
+            <a href="/2016/02/28/etsy-s-Tour/">USACO-6.5-betsy&#39;s Tour</a>
+          </li>
+        
+          <li>
+            <a href="/2016/02/21/Closed-FencesClosed-Fences/">USACO-6.5-Closed FencesClosed Fences</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+<meta charset="UTF-8">
+<div class="widget tag">
+<h3 class="title">传送门</h3>
+<ul class="entry">
+<li></li>
+<li><a href="http://www.cnblogs.com/xingxing1024" title="努力的星星">努力的星星</a></li>
+<li><a href="https://wp-williamchenhouse.rhcloud.com/" title="萌萌的学弟">萌萌的学弟</a></li>
+<li><a href="http://www.0byjwzsf.me/" title="傲娇的金老板">傲娇的金老板</a></li>
+<li><a href="http://www.man1ac.me/" title="学霸的小凳子">学霸的小凳子</a></li>
+<li><a href="http://yooooh.net/" title="雷神">雷神！雷神！</a></li>
+</ul>
+</div>
+  
+</aside>
+        
+      </div>
+      <div id="footer">
+  
+  <div id='foot-stars'></div>
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 zjwzcn07<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+      </script>
+      <span id="busuanzi_container_site_pv">
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+      </span>
+    </div>
+  </div>
+</div>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
